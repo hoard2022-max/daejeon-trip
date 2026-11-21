@@ -793,27 +793,32 @@ const BASS={
 function voicing(c,lo=55){return c.q.map(i=>{let m=60+c.root+i;while(m>=lo+14)m-=12;while(m<lo)m+=12;return m;}).sort((a,b)=>a-b);}
 function idxNote(vc,chr){const up="abcde".indexOf(chr);const i=up>=0?up:parseInt(chr,10);if(isNaN(i))return null;return vc[i%vc.length]+12*Math.floor(i/vc.length)+(up>=0?12:0);}
 function parseLine(str){const out=[];for(let i=0;i<str.length;i++){const c=str[i];if(c==="."||c==="-")continue;let len=1;while(str[i+len]==="-")len++;out.push([i,c,len]);}return out;}
-function scheduleSong(s,out,start,dur){
-  {const sg=actx.createGain();sg.gain.value=s.jingle?2.6:(s.gain||1);sg.connect(out);out=sg;}
-  if(s.jingle)return scheduleJingle(out,start,dur);
-  const steps=s.beats*4,sd=60/s.bpm/4,barLen=steps*sd,end=start+dur;
-  const dry=actx.createGain();dry.connect(out);
-  const rv=actx.createConvolver();rv.buffer=reverbBuf();const rg=actx.createGain();rg.gain.value=s.rev;rv.connect(rg);rg.connect(out);
+/* Songs are scheduled one bar at a time, just ahead of playback, so switching songs is instant and the phone never holds more than a bar of notes. */
+function songSetup(s,out,start,dur){
+  const sg=actx.createGain();sg.gain.value=s.jingle?2.6:(s.gain||1);sg.connect(out);
+  if(s.jingle)return{s,out:sg,start,end:start+dur,barLen:1.6,jingle:true};
+  const steps=s.beats*4,sd=60/s.bpm/4,barLen=steps*sd;
+  const dry=actx.createGain();dry.connect(sg);
+  const rv=actx.createConvolver();rv.buffer=reverbBuf();const rg=actx.createGain();rg.gain.value=s.rev;rv.connect(rg);rg.connect(sg);
   const bus=actx.createGain();bus.connect(dry);bus.connect(rv);
-  const at=(bar,i)=>start+bar*barLen+i*sd+(i%2?s.swing*sd:0);
-  if(s.crackle){for(let t=start;t<end;t+=.13+Math.random()*.25)noiseHit(t,dry,"highpass",3000,.5,.03+Math.random()*.03,.01);}
-  for(let bar=0;start+bar*barLen<end;bar++){
-    const c=s.chords[bar%s.chords.length],vc=voicing(c),vcl=voicing(c,62);
-    for(const k of["kick","snare","clap","rim","hat","ohat"]){const p=s[k];if(!p)continue;for(let i=0;i<steps;i++)if(p[i]==="x"){const t=at(bar,i);if(t<end)DR[k](t,k==="kick"?dry:bus,k==="hat"?(i%4===0?1:.7):1);}}
-    if(s.brush)for(let i=0;i<steps;i+=2){const t=at(bar,i);if(t<end)DR.brush(t,bus,i%8===4?1.3:.8);}
-    if(s.bass){for(const[i,chr,len]of parseLine(s.bass)){const t=at(bar,i);if(t>=end)continue;const off={"1":0,"3":c.q[1],"5":7,"6":9,"8":12}[chr]||0;BASS[s.bassType](mtof(36+c.root+off),t,len*sd*.95,dry);}}
-    if(s.pad){vc.forEach(m=>INST.pad(mtof(m),at(bar,0),barLen*.98,bus));}
-    if(s.comp){for(const[i,chr]of parseLine(s.comp)){const t=at(bar,i);if(t>=end)continue;const L=chr==="L"?barLen*.95:sd*1.6;vc.forEach(m=>INST[s.compInst](mtof(m),t,L,bus,.8));}}
-    if(s.arp){for(const[i,chr,len]of parseLine(s.arp)){const t=at(bar,i);if(t>=end)continue;const m=idxNote(vcl,chr);if(m)INST[s.arpInst](mtof(m),t,len*sd,bus,.9);}}
-    if(s.lead){const line=bar%2?s.lead.split("").reverse().join("").replace(/^(-+)/,m=>".".repeat(m.length)):s.lead;
-      for(const[i,chr,len]of parseLine(line)){const t=at(bar,i);if(t>=end)continue;const m=idxNote(vcl,chr);if(m)INST[s.leadInst](mtof(m+12),t,len*sd,bus,1);}}
-  }
+  return{s,steps,sd,barLen,start,end:start+dur,dry,bus};
 }
+function scheduleBar(st,bar){
+  if(st.jingle)return jingleBar(st,bar);
+  const{s,steps,sd,barLen,start,end,dry,bus}=st,b0=start+bar*barLen;if(b0>=end)return;
+  const at=i=>b0+i*sd+(i%2?s.swing*sd:0);
+  if(s.crackle){for(let t=b0;t<b0+barLen&&t<end;t+=.13+Math.random()*.25)noiseHit(t,dry,"highpass",3000,.5,.03+Math.random()*.03,.01);}
+  const c=s.chords[bar%s.chords.length],vc=voicing(c),vcl=voicing(c,62);
+  for(const k of["kick","snare","clap","rim","hat","ohat"]){const p=s[k];if(!p)continue;for(let i=0;i<steps;i++)if(p[i]==="x"){const t=at(i);if(t<end)DR[k](t,k==="kick"?dry:bus,k==="hat"?(i%4===0?1:.7):1);}}
+  if(s.brush)for(let i=0;i<steps;i+=2){const t=at(i);if(t<end)DR.brush(t,bus,i%8===4?1.3:.8);}
+  if(s.bass){for(const[i,chr,len]of parseLine(s.bass)){const t=at(i);if(t>=end)continue;const off={"1":0,"3":c.q[1],"5":7,"6":9,"8":12}[chr]||0;BASS[s.bassType](mtof(36+c.root+off),t,len*sd*.95,dry);}}
+  if(s.pad){vc.forEach(m=>INST.pad(mtof(m),b0,Math.min(barLen*.98,end-b0),bus));}
+  if(s.comp){for(const[i,chr]of parseLine(s.comp)){const t=at(i);if(t>=end)continue;const L=chr==="L"?barLen*.95:sd*1.6;vc.forEach(m=>INST[s.compInst](mtof(m),t,L,bus,.8));}}
+  if(s.arp){for(const[i,chr,len]of parseLine(s.arp)){const t=at(i);if(t>=end)continue;const m=idxNote(vcl,chr);if(m)INST[s.arpInst](mtof(m),t,len*sd,bus,.9);}}
+  if(s.lead){const line=bar%2?s.lead.split("").reverse().join("").replace(/^(-+)/,m=>".".repeat(m.length)):s.lead;
+    for(const[i,chr,len]of parseLine(line)){const t=at(i);if(t>=end)continue;const m=idxNote(vcl,chr);if(m)INST[s.leadInst](mtof(m+12),t,len*sd,bus,1);}}
+}
+function scheduleSong(s,out,start,dur){const st=songSetup(s,out,start,dur);for(let bar=0;st.start+bar*st.barLen<st.end;bar++)scheduleBar(st,bar);}
 /* "Jingle Bells" (James Lord Pierpont, 1857, public domain) */
 const NT={C3:130.81,D3:146.83,E3:164.81,F3:174.61,G3:196,A3:220,B3:246.94,C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392,A4:440,B4:493.88,C5:523.25,D5:587.33,E5:659.25,F5:698.46,G5:783.99};
 const PHR_A=[["E5",1],["E5",1],["E5",2],["E5",1],["E5",1],["E5",2],["E5",1],["G5",1],["C5",1.5],["D5",.5],["E5",4]];
@@ -821,21 +826,21 @@ const MEL=[...PHR_A,["F5",1],["F5",1],["F5",1.5],["F5",.5],["F5",1],["E5",1],["E
   ...PHR_A,["F5",1],["F5",1],["F5",1.5],["F5",.5],["F5",1],["E5",1],["E5",1],["E5",.5],["E5",.5],["G5",1],["G5",1],["F5",1],["D5",1],["C5",4]];
 const CHD={C:{b:"C3",f:"G3",t:["C4","E4","G4"]},F:{b:"F3",f:"C4",t:["C4","F4","A4"]},G:{b:"G3",f:"D3",t:["D4","G4","B4"]}};
 const BARS=["C","C","C","C","F","C","G","G","C","C","C","C","F","C","G","C"];
+const JB=(()=>{const bars=Array.from({length:16},()=>[]);let pos=0;for(const[n,b]of MEL){bars[Math.floor(pos/4)%16].push([pos%4,n,b]);pos+=b;}return bars;})();
 function tone(f,t,len,type,vol,out){const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+len);o.connect(g);g.connect(out);o.start(t);o.stop(t+len+.05);}
-function scheduleJingle(out,start,dur){const B=.4,end=start+dur,loopLen=64*B;
-  for(let base=start;base<end;base+=loopLen){
-    let t=base;for(const[n,b]of MEL){if(t>=end)break;const len=b*B;tone(NT[n],t,Math.max(.22,len*.92),"triangle",.2,out);tone(NT[n]*2,t,.35,"sine",.05,out);t+=len;}
-    for(let bar=0;bar<16;bar++){const bt=base+bar*4*B;if(bt>=end)break;const c=CHD[BARS[bar]];
-      tone(NT[c.b],bt,B*.9,"triangle",.26,out);tone(NT[c.f],bt+2*B,B*.9,"triangle",.22,out);
-      for(const k of[1,3])c.t.forEach(n=>tone(NT[n],bt+k*B,B*.35,"square",.022,out));
-      for(let e=0;e<8;e++)noiseHit(bt+e*B/2,out,"highpass",7000,.7,e%2?.045:.09,.09);}
-  }}
+function jingleBar(st,bar){const B=.4,bt=st.start+bar*1.6,out=st.out,end=st.end;if(bt>=end)return;const b=bar%16,c=CHD[BARS[b]];
+  for(const[off,n,len]of JB[b]){const t=bt+off*B;if(t<end){tone(NT[n],t,Math.max(.22,len*B*.92),"triangle",.2,out);tone(NT[n]*2,t,.35,"sine",.05,out);}}
+  tone(NT[c.b],bt,B*.9,"triangle",.26,out);if(bt+2*B<end)tone(NT[c.f],bt+2*B,B*.9,"triangle",.22,out);
+  for(const k of[1,3])if(bt+k*B<end)c.t.forEach(n=>tone(NT[n],bt+k*B,B*.35,"square",.022,out));
+  for(let e=0;e<8;e++)if(bt+e*B/2<end)noiseHit(bt+e*B/2,out,"highpass",7000,.7,e%2?.045:.09,.09);}
 function startMusic(dur,extra){if(!musicOn||!ensureAudio())return;stopMusic();
-  const g=actx.createGain(),comp=actx.createDynamicsCompressor(),t=actx.currentTime+.06;
+  const g=actx.createGain(),comp=actx.createDynamicsCompressor(),t=actx.currentTime+.05;
   comp.threshold.value=-18;comp.ratio.value=4;comp.attack.value=.005;comp.release.value=.2;g.connect(comp);comp.connect(actx.destination);if(extra)comp.connect(extra);
-  g.gain.setValueAtTime(.62,t);g.gain.setValueAtTime(.62,t+Math.max(0,dur-1.2));g.gain.linearRampToValueAtTime(.0001,t+dur);
-  scheduleSong(songById(songId),g,t,dur);music={g,comp};}
-function stopMusic(){if(music){try{music.comp.disconnect();music.g.disconnect();}catch(e){}music=null;}}
+  g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.62,t+.04);g.gain.setValueAtTime(.62,t+Math.max(.05,dur-1.2));g.gain.linearRampToValueAtTime(.0001,t+dur);
+  const m={g,comp,st:songSetup(songById(songId),g,t,dur),bar:0,timer:0};
+  const pump=()=>{if(music!==m)return;const horizon=Math.min(m.st.end,actx.currentTime+.5);while(m.st.start+m.bar*m.st.barLen<horizon){scheduleBar(m.st,m.bar);m.bar++;}if(m.st.start+m.bar*m.st.barLen>=m.st.end)clearInterval(m.timer);};
+  music=m;pump();m.timer=setInterval(pump,90);}
+function stopMusic(){if(music){const m=music;music=null;clearInterval(m.timer);try{const now=actx.currentTime;m.g.gain.cancelScheduledValues(now);m.g.gain.setValueAtTime(m.g.gain.value,now);m.g.gain.linearRampToValueAtTime(.0001,now+.04);setTimeout(()=>{try{m.comp.disconnect();m.g.disconnect();}catch(e){}},80);}catch(e){}}}
 let previewId=null,chosenId=null;
 function drawSongs(){const nm=id=>id==="off"?"음악 없이":songById(id).name;
   $("songList").innerHTML=[...SONGS.map(s=>[s.id,s.name,s.mood]),["off","음악 없이","조용하게"]].map(([id,n,m])=>`<button class="song" type="button" data-song="${id}" aria-pressed="${id===previewId}"><b>${id===chosenId?"✓ ":""}${esc(n)}</b><small>${id===previewId&&id!=="off"?"♪ 듣는 중":esc(m)}</small></button>`).join("");
@@ -845,7 +850,7 @@ function drawSongs(){const nm=id=>id==="off"?"음악 없이":songById(id).name;
   $("chosenNote").textContent=chosenId?`영상에 들어갈 곡: ${nm(chosenId)}`:"아직 곡을 고르지 않았어요";}
 $("songList").addEventListener("click",e=>{const b=e.target.closest("[data-song]");if(!b||recording)return;
   previewId=b.dataset.song;$("songErr").hidden=true;
-  if(previewId==="off"){musicOn=false;stopMusic();}else{musicOn=true;songId=previewId;ensureAudio();t0=performance.now();cycle=-1;}
+  if(previewId==="off"){musicOn=false;stopMusic();}else{musicOn=true;songId=previewId;ensureAudio();t0=performance.now();cycle=0;startMusic(totalDur());}
   drawSongs();});
 $("pickBtn").addEventListener("click",()=>{if(!previewId)return;chosenId=previewId;if(chosenId!=="off")ls.set("song",chosenId);drawSongs();$("recBtn").scrollIntoView({block:"center",behavior:"smooth"});toast("곡을 정했어요. 이제 영상을 만들어 저장하세요");});
 drawSongs();
