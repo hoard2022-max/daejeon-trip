@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta property="og:title" content="신가네 대전여행">
+<meta property="og:description" content="1박 2일 대전 여행 가이드 · DIRECTED BY 박사위">
+<meta property="og:image" content="https://hoard2022-max.github.io/daejeon-trip/og.jpg">
+<meta property="og:type" content="website">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>신가네 대전여행</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Myeongjo:wght@700;800&family=Inter:wght@400;600&family=Gowun+Dodum&family=Space+Mono&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=block">
+<style>
+/* Layout: curtain intro -> family photo reveal -> app with sticky bookmark tabs (소개 / 추천 명소 / 우리의 코스 / 기록 남기기), one panel at a time. */
+:root{
+  --paper:#F6F0E4; --card:#FFFCF6; --ink:#1E4A2F; --ink-soft:#56705D; --line:#DDD2BE; --curtain:#A8121C; --chip:#E7EEDF; --on-ink:#F6F0E4;
+  --t1:#F2D9D3; --t2:#DCE8D4; --t3:#F3E3C6; --t4:#D8E2EC;
+  --f-display:"Nanum Myeongjo","Noto Serif KR",serif;
+  --f-body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"Space Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#121915;--card:#1A231D;--ink:#E8E1CF;--ink-soft:#A5B3A6;--line:#2C3A30;--curtain:#E0575C;--chip:#24322A;--on-ink:#121915;--t1:#3A2423;--t2:#243326;--t3:#3A3020;--t4:#22303B;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#121915;--card:#1A231D;--ink:#E8E1CF;--ink-soft:#A5B3A6;--line:#2C3A30;--curtain:#E0575C;--chip:#24322A;--on-ink:#121915;--t1:#3A2423;--t2:#243326;--t3:#3A3020;--t4:#22303B;color-scheme:dark}
+html,body{background:var(--paper);color:var(--ink)}
+body{font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.ms{font-family:"Material Symbols Outlined";font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;font-feature-settings:"liga";display:inline-block;vertical-align:middle}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:2px solid var(--curtain);outline-offset:2px}
+
+/* ---------- Intro ---------- */
+#intro{position:fixed;inset:0;z-index:50;overflow:hidden;color:#fff;background:#0b0102}
+.reveal{position:absolute;inset:0}
+.reveal{background:#7a3a26}
+.reveal .blur{position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(22px) brightness(.75);transform:none}
+.reveal .main{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 32%;display:block;transform:scale(1.08);transition:transform 6s ease-out}
+.reveal::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,6,4,.55) 0%,rgba(20,6,4,0) 26%,rgba(20,6,4,0) 52%,rgba(20,6,4,.86) 100%)}
+.reveal .cap{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;
+  padding-block:0 calc(30px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));opacity:0;transform:translateY(16px);transition:opacity .9s 1.1s,transform .9s 1.1s}
+.reveal .top{position:absolute;left:0;right:0;top:calc(22px + env(safe-area-inset-top,0px));z-index:1;text-align:center;font-family:var(--f-mono);font-size:12px;letter-spacing:.3em;opacity:0;transition:opacity .9s 1.3s}
+.cap .star{font-family:var(--f-mono);font-size:12px;letter-spacing:.26em;opacity:.9}
+.cap h2{margin:0;font-family:var(--f-display);font-weight:800;font-size:clamp(40px,12vw,60px);line-height:1.1;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+.cap .dir{font-family:var(--f-mono);font-size:12px;letter-spacing:.22em;opacity:.85}
+.go-btn{margin-top:16px;background:#fff;color:#3a0a0c;border:0;border-radius:999px;padding:14px 30px;font-size:17px;font-family:var(--f-body)}
+#intro .half{position:absolute;top:0;bottom:0;width:51%;z-index:2;background:repeating-linear-gradient(90deg,#3d0006 0,#7c0912 18px,#b5121d 34px,#d8202b 40px,#9b0e18 52px,#4a0008 72px);transition:transform 1.6s cubic-bezier(.7,0,.25,1)}
+#intro .l{left:0}#intro .r{right:0}
+#intro .valance{position:absolute;inset:0 0 auto;height:14%;z-index:3;background:linear-gradient(#1a0003,rgba(26,0,3,0));transition:opacity .8s}
+#intro .spot{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse 62% 44% at 50% 50%,rgba(255,90,90,.28) 0%,rgba(255,40,40,.12) 45%,rgba(0,0,0,.55) 75%,rgba(0,0,0,.85) 100%);transition:opacity .8s}
+#intro .content{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;padding-block:calc(28px + env(safe-area-inset-top,0px)) calc(28px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));transition:opacity .6s}
+.presents{font-family:var(--f-mono);font-size:13px;letter-spacing:.28em;opacity:.9}
+.marquee{display:flex;flex-direction:column;align-items:center;gap:6px}
+.marquee .fam{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,6.5vw,30px);letter-spacing:.5em;margin-right:-.5em}
+.marquee h1{margin:0;font-family:var(--f-display);font-weight:800;font-size:clamp(58px,19vw,104px);line-height:1.02;text-shadow:0 0 18px rgba(255,200,180,.35),0 2px 0 rgba(0,0,0,.25)}
+.marquee .en{font-family:var(--f-mono);font-size:13px;letter-spacing:.26em;margin-top:10px}
+.open-btn{margin-top:30px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.7);border-radius:999px;padding:12px 26px;font-family:var(--f-mono);font-size:13px;letter-spacing:.24em}
+.cast{font-family:var(--f-mono);font-size:12px;letter-spacing:.18em;opacity:.85}
+@keyframes breathe{50%{box-shadow:0 0 0 8px rgba(255,255,255,.08);border-color:#fff}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.marquee > *{animation:rise 1s both}.marquee .fam{animation-delay:.2s}.marquee h1{animation-delay:.45s}.marquee .en{animation-delay:.8s}
+.open-btn{animation:rise 1s 1.1s both,breathe 2.4s 2.1s ease-in-out infinite}
+#intro.opening .l{transform:translateX(-102%) skewX(-3deg)}#intro.opening .r{transform:translateX(102%) skewX(3deg)}
+#intro.opening .content,#intro.opening .spot,#intro.opening .valance{opacity:0;pointer-events:none}
+#intro.opening .reveal .main{transform:scale(1)}
+#intro.opening .cap{opacity:1;transform:none}#intro.opening .top{opacity:.9}
+#intro.leaving{opacity:0;transition:opacity .6s}
+
+/* ---------- App shell ---------- */
+.shell{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.head{padding-block:22px 6px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.head .eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;color:var(--curtain)}
+.head h1{margin:2px 0 0;font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1.2}
+.linkish{background:none;border:0;padding:6px 0;color:var(--ink-soft);font-size:13px;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:8;background:var(--paper);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding-top:10px;border-bottom:3px solid var(--ink)}
+.tab{border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;padding:8px 2px 7px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:13px;line-height:1.2;transform:translateY(5px);transition:transform .2s;white-space:nowrap}
+.tab .ms{font-size:20px}
+.tab:nth-child(1){background:var(--t1)}.tab:nth-child(2){background:var(--t2)}.tab:nth-child(3){background:var(--t3)}.tab:nth-child(4){background:var(--t4)}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--on-ink);border-color:var(--ink);transform:none}
+.panel{padding-block:24px 72px;display:flex;flex-direction:column;gap:18px}
+.panel h2{margin:0;font-family:var(--f-display);font-weight:800;font-size:26px;line-height:1.25;text-wrap:balance}
+.lead{margin:-8px 0 0;color:var(--ink-soft)}
+.next{align-self:stretch}
+
+/* about */
+.facts{display:grid;gap:10px}
+.fact{display:grid;grid-template-columns:52px minmax(0,1fr);gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.fact .em{font-size:34px;text-align:center}
+.fact b{display:block;font-family:var(--f-display);font-weight:800;font-size:17px}
+.fact span{font-size:15px;color:var(--ink-soft)}
+.weather{display:flex;gap:10px;align-items:flex-start;background:var(--chip);border-radius:14px;padding:12px 14px;font-size:15px}
+.weather .ms{font-size:22px;margin-top:1px}
+
+/* places */
+.title-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.nmap{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--ink-soft);font-size:11px;flex:none}
+.nm-badge{width:46px;height:46px;border-radius:14px;background:#03C75A;color:#fff;display:grid;place-items:center;box-shadow:0 2px 0 rgba(0,0,0,.12)}
+.nm-badge .ms{font-size:28px}
+.search{display:flex;align-items:center;gap:8px;min-height:52px;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:0 14px}
+.search .ms{font-size:22px;color:var(--ink-soft)}
+.search input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;font-size:17px;outline:none;min-height:50px}
+.find{border:1.5px dashed var(--ink-soft);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.find b{font-family:var(--f-display);font-size:17px}
+.find p{margin:-6px 0 0;font-size:14px;color:var(--ink-soft)}
+.find .row a{text-decoration:none}
+.btn.naver{background:#03C75A;border-color:#03C75A;color:#fff}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font-size:15px}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.places{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.place{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px}
+.tile{width:76px;height:76px;border-radius:18px;background:var(--chip);display:grid;place-items:center;font-size:44px;position:relative}
+.tile::after{content:"";position:absolute;bottom:9px;left:50%;width:42px;height:7px;margin-left:-21px;border-radius:50%;background:rgba(0,0,0,.13)}
+.tile span{position:relative;z-index:1;transform:translateY(-4px)}
+.place .area{font-family:var(--f-mono);font-size:12px;color:var(--ink-soft)}
+.place h4{margin:0 0 4px;font-size:19px;font-family:var(--f-display);font-weight:800;line-height:1.3}
+.place p{margin:0;font-size:15px;color:var(--ink-soft)}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tag{font-size:12px;border-radius:6px;padding:2px 7px;background:var(--chip);color:var(--ink)}
+.tag.dad{background:#F3E3CF;color:#6B3F12}.tag.mom{background:#DCEBD5;color:#2D5A1F}
+.acts{grid-column:1/-1;display:flex;gap:8px}
+.mapbtn{flex:none;width:52px;min-height:48px;border-radius:12px;background:#03C75A;color:#fff;display:grid;place-items:center;text-decoration:none}
+.mapbtn .ms{font-size:24px}
+.pnote{display:flex;align-items:center;gap:4px;margin-top:6px;font-size:13px;color:var(--curtain)}
+.pnote .ms{font-size:16px}
+.count{font-family:var(--f-mono);font-size:12px;color:var(--ink-soft);margin:-8px 0 0}
+.add{flex:1;min-height:48px;border-radius:12px;border:1px solid var(--ink);background:transparent;font-size:16px;display:flex;align-items:center;justify-content:center;gap:6px}
+.add[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}
+.add .ms{font-size:20px}
+
+/* course */
+.day{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;color:var(--ink-soft);margin:6px 0 -6px}
+.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.tl li{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 8px 10px 10px}
+.tl .em{font-size:28px;text-align:center}
+.tl b{display:block;font-size:16px;font-family:var(--f-display);font-weight:800;line-height:1.35}
+.tl span{font-size:13px;color:var(--ink-soft)}
+.tl li.fixed{border:1.5px solid var(--ink);background:var(--chip)}
+.mini{display:flex;gap:4px}
+.icon-btn{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center}
+.icon-btn .ms{font-size:19px}
+.slot-add{min-height:44px;border-radius:12px;border:1.5px dashed var(--line);background:transparent;color:var(--ink-soft);font-size:15px;display:flex;align-items:center;justify-content:center;gap:6px}
+
+/* records */
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{flex:1 1 140px;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:50px;border-radius:12px;font-size:16px;border:1px solid var(--line);background:var(--card);white-space:nowrap}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.btn.red{background:var(--curtain);border-color:var(--curtain);color:#fff}
+.btn .ms{font-size:21px}
+.album{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.album button{padding:0;border:0;background:none;border-radius:8px;overflow:hidden}
+.album img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block}
+.empty{border:1.5px dashed var(--line);border-radius:16px;padding:22px 16px;text-align:center;color:var(--ink-soft);font-size:15px}
+.note{font-size:13px;color:var(--ink-soft);text-align:center;margin:0}
+
+/* sheets & modals */
+.sheet{position:fixed;inset:0;z-index:40;background:var(--paper);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sheet .inner{max-width:540px;margin:0 auto;display:flex;flex-direction:column;gap:16px;padding-block:calc(14px + env(safe-area-inset-top,0px)) calc(40px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.sheet .inner > .btn,.modal .box > .btn{flex:none}
+[hidden]{display:none!important}
+.sheet-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sheet-top h3{margin:0;font-family:var(--f-display);font-weight:800;font-size:22px}
+.x{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);display:grid;place-items:center}
+.stage{width:100%;max-width:330px;aspect-ratio:9/16;align-self:center;border-radius:14px;display:block;background:#2F4A3A}
+.hint{text-align:center;font-size:14px;color:var(--ink-soft);margin:-4px 0 0}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:14px;color:var(--ink-soft)}
+.field input[type=text],.field select{min-height:50px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 14px;font:inherit;font-size:17px}
+.sugs{display:flex;flex-wrap:wrap;gap:6px}
+.sug{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 12px;font-size:14px}
+.sug.on{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.photo-btn{min-height:56px;border-radius:12px;border:1.5px dashed var(--ink-soft);background:var(--card);display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;cursor:pointer}
+.photo-btn .ms{font-size:24px}
+.err{color:#B3261E;font-size:14px;margin:-8px 0 0}
+.songs-h{display:flex;flex-direction:column;gap:2px}
+.songs-h b{font-family:var(--f-display);font-size:17px}
+.songs-h small{color:var(--ink-soft);font-size:13px}
+.songs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.song{min-height:58px;border-radius:12px;border:1px solid var(--line);background:var(--card);text-align:left;padding:8px 12px;display:flex;flex-direction:column;justify-content:center;gap:1px}
+.song b{font-size:15px;font-weight:600}
+.song small{font-size:12px;color:var(--ink-soft)}
+.song[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.song[aria-pressed="true"] small{color:var(--on-ink);opacity:.8}
+.kakao-tip{background:#FEE500;color:#3A1D1D;border-radius:12px;padding:10px 14px;font-size:14px}
+.progress{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:var(--curtain)}
+.modal{position:fixed;inset:0;z-index:45;background:rgba(10,14,12,.45);display:flex;align-items:flex-end;justify-content:center}
+.modal .box{background:var(--paper);width:100%;max-width:560px;border-radius:22px 22px 0 0;display:flex;flex-direction:column;gap:12px;max-height:88%;overflow-y:auto;
+  padding-block:20px calc(22px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.modal .box h3{margin:0;font-family:var(--f-display);font-weight:800;font-size:20px}
+.modal .box p{margin:-6px 0 0;color:var(--ink-soft);font-size:14px}
+.choice{min-height:60px;border-radius:14px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;gap:12px;padding:0 16px;font-size:17px;text-align:left}
+.choice small{display:block;color:var(--ink-soft);font-size:13px}
+.choice .ms{font-size:24px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--on-ink);padding:10px 18px;border-radius:16px;width:max-content;font-size:15px;z-index:60;max-width:calc(100% - 32px);text-align:center}
+@media (prefers-reduced-motion:reduce){#intro *,#intro{transition:none!important;animation:none!important}}
+</style>
+
+</head>
+<body>
+<div id="intro" role="dialog" aria-label="신가네 대전여행 시작 화면">
+  <div class="reveal">
+    <img class="blur" src="assets/family.webp" alt="">
+    <img class="main" src="assets/family.webp" alt="눈 내리는 벽 앞에 선 신가네 세 사람 미니어처">
+    <div class="top">NOW SHOWING</div>
+    <div class="cap">
+      <div class="star">STARRING · 신정도 · 윤혜경 · 신나현</div>
+      <h2>신가네 대전여행</h2>
+      <div class="dir">DIRECTED BY 박사위 · 11.21 – 11.22</div>
+      <button class="go-btn" id="goBtn" type="button">여행 시작하기 ▸</button>
+    </div>
+  </div>
+  <div class="half l"></div><div class="half r"></div><div class="valance"></div><div class="spot"></div>
+  <div class="content">
+    <div class="presents">SHIN FAMILY PRESENTS</div>
+    <div class="marquee">
+      <div class="fam">신가네</div>
+      <h1>대전여행</h1>
+      <div class="en">DAEJEON · 11.21 – 11.22</div>
+      <button class="open-btn" id="openBtn" type="button">막 올리기 ▸</button>
+    </div>
+    <div class="cast">장인어른 · 장모님 · 그리고 우리</div>
+  </div>
+</div>
+
+<div class="shell">
+  <header class="head">
+    <div><div class="eyebrow">1박 2일 · 11.21 – 11.22</div><h1>신가네 대전여행</h1></div>
+    <button class="linkish" id="replay" type="button">막 다시 올리기</button>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="여행 안내">
+    <button class="tab" role="tab" id="tab-about" data-tab="about" aria-controls="about" type="button"><span class="ms" aria-hidden="true">auto_stories</span>대전 소개</button>
+    <button class="tab" role="tab" id="tab-places" data-tab="places" aria-controls="places" type="button"><span class="ms" aria-hidden="true">pin_drop</span>추천 명소</button>
+    <button class="tab" role="tab" id="tab-course" data-tab="course" aria-controls="course" type="button"><span class="ms" aria-hidden="true">route</span>우리의 코스</button>
+    <button class="tab" role="tab" id="tab-records" data-tab="records" aria-controls="records" type="button"><span class="ms" aria-hidden="true">photo_library</span>기록 남기기</button>
+  </nav>
+
+  <section class="panel" id="about" role="tabpanel" aria-labelledby="tab-about">
+    <h2>대전은 어떤 곳?</h2>
+    <div class="facts">
+      <div class="fact"><div class="em" aria-hidden="true">🥐</div><div><b>빵의 도시</b><span>1956년 대전역 앞 작은 찐빵집에서 시작한 성심당이 대전의 자랑이 됐어요.</span></div></div>
+      <div class="fact"><div class="em" aria-hidden="true">🔭</div><div><b>과학의 도시</b><span>1993년 대전 엑스포 뒤로 연구소가 모인 과학 도시예요. 한빛탑이 그 상징이에요.</span></div></div>
+      <div class="fact"><div class="em" aria-hidden="true">♨️</div><div><b>온천의 도시</b><span>유성온천은 오래전부터 이름난 온천이라, 쌀쌀한 날 몸 녹이기 좋아요.</span></div></div>
+      <div class="fact"><div class="em" aria-hidden="true">🍜</div><div><b>칼국수의 도시</b><span>칼국수 집이 유난히 많아요. 추운 날 따끈한 한 그릇이 제격이에요.</span></div></div>
+    </div>
+    <div class="weather"><span class="ms" aria-hidden="true">ac_unit</span><div>요즘 대전은 아침저녁으로 꽤 쌀쌀해요. <b>따뜻한 실내</b>와 <b>따끈한 음식</b> 위주로 골랐어요. 목도리 꼭 챙기세요.</div></div>
+    <button class="btn primary next" type="button" data-goto="places">추천 명소 보러 가기<span class="ms" aria-hidden="true">arrow_forward</span></button>
+  </section>
+
+  <section class="panel" id="places" role="tabpanel" aria-labelledby="tab-places" hidden>
+    <div class="title-row"><h2>추천 명소</h2>
+      <a class="nmap" href="https://map.naver.com/p/" target="_blank" rel="noopener" aria-label="네이버지도 열기"><span class="nm-badge" aria-hidden="true"><span class="ms">location_on</span></span><span>네이버지도</span></a></div>
+    <p class="lead">마음에 드는 곳은 <b>코스에 담기</b>를 눌러 주세요.</p>
+    <div class="search"><span class="ms" aria-hidden="true">search</span><input id="placeQ" type="search" placeholder="다른 곳 찾아보기 (예: 한밭수목원)" autocomplete="off" aria-label="장소 검색"></div>
+    <div id="searchBox" class="find" hidden></div>
+    <div class="chips" role="group" aria-label="분류" id="chips"></div>
+    <p class="count"><span id="placeCount"></span> · 영업시간은 초록 버튼에서 확인</p>
+    <ul class="places" id="placeList"></ul>
+  </section>
+
+  <section class="panel" id="course" role="tabpanel" aria-labelledby="tab-course" hidden>
+    <h2>우리의 코스</h2>
+    <p class="lead">추천 명소에서 담거나, 각 자리의 <b>+ 추가</b>로 직접 넣을 수 있어요.</p>
+    <div id="courseBody" style="display:flex;flex-direction:column;gap:12px"></div>
+  </section>
+
+  <section class="panel" id="records" role="tabpanel" aria-labelledby="tab-records" hidden>
+    <h2>기록 남기기</h2>
+    <p class="lead">가는 곳마다 사진 한 장으로 포스터를 만들고, 다 모이면 영상으로 남겨요.</p>
+    <div class="row">
+      <button class="btn primary" id="newPoster" type="button"><span class="ms" aria-hidden="true">add_a_photo</span>포스터 만들기</button>
+      <button class="btn red" id="makeVideo" type="button"><span class="ms" aria-hidden="true">movie</span>영상으로 만들기</button>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-family:var(--f-display);font-size:18px">우리의 포스터</b><small id="pCount" style="color:var(--ink-soft)">0장</small></div>
+    <div id="album" class="album" hidden></div>
+    <div id="empty" class="empty">아직 포스터가 없어요.<br>첫 장소에서 사진 한 장 남겨 보세요.</div>
+    <p class="note">포스터는 만든 휴대폰에만 모여요. 한 휴대폰으로 계속 만들어 주세요.</p>
+  </section>
+</div>
+
+<!-- when to go -->
+<div class="modal" id="whenModal" hidden>
+  <div class="box" role="dialog" aria-labelledby="whenTitle">
+    <h3 id="whenTitle">언제 가실래요?</h3><p id="whenSub"></p>
+    <button class="choice" type="button" data-slot="sat"><span class="ms" aria-hidden="true">wb_sunny</span><span>11.21 토요일<small>와인바 오픈 전에</small></span></button>
+    <button class="choice" type="button" data-slot="night"><span class="ms" aria-hidden="true">nightlight</span><span>11.21 토요일 밤<small>와인바 오픈 뒤에</small></span></button>
+    <button class="choice" type="button" data-slot="sun"><span class="ms" aria-hidden="true">light_mode</span><span>11.22 일요일<small>생일 저녁 전에</small></span></button>
+    <button class="btn" type="button" data-close-modal="whenModal">취소</button>
+  </div>
+</div>
+
+<!-- add into a slot -->
+<div class="modal" id="addModal" hidden>
+  <div class="box" role="dialog" aria-labelledby="addTitle">
+    <h3 id="addTitle">코스에 추가</h3><p id="addSub"></p>
+    <div class="field"><label for="addQ">장소 검색 또는 직접 입력</label><input id="addQ" type="text" maxlength="16" autocomplete="off" placeholder="성심당, 집에서 낮잠"></div>
+    <div class="sugs" id="addSugs"></div>
+    <p class="err" id="addErr" hidden></p>
+    <button class="btn primary" id="addCustom" type="button"><span class="ms" aria-hidden="true">add</span><span id="addCustomLabel">직접 입력한 이름으로 추가</span></button>
+    <button class="btn" type="button" data-close-modal="addModal">닫기</button>
+  </div>
+</div>
+
+<!-- poster maker -->
+<div id="maker" class="sheet" hidden>
+  <div class="inner">
+    <div class="sheet-top"><h3>포스터 만들기</h3><button class="x" data-close="maker" type="button" aria-label="닫기"><span class="ms">close</span></button></div>
+    <img id="preview" class="stage" alt="포스터 미리보기">
+    <label class="photo-btn" for="photo"><span class="ms" aria-hidden="true">photo_camera</span><span id="photoLabel">사진 찍기 / 고르기</span></label>
+    <input id="photo" type="file" accept="image/*" hidden>
+    <div class="field">
+      <label for="title">어디인가요? (검색하거나 직접 입력)</label>
+      <input id="title" type="text" maxlength="14" autocomplete="off" placeholder="성심당">
+      <div class="sugs" id="sugs"></div>
+    </div>
+    <div class="field"><label for="with">WITH</label><input id="with" type="text" maxlength="24" autocomplete="off"></div>
+    <div class="field"><label for="iconset">오른쪽 아래 기호</label><select id="iconset"></select></div>
+    <p class="err" id="makerErr" hidden></p>
+    <button class="btn primary" id="savePoster" type="button"><span class="ms" aria-hidden="true">collections_bookmark</span>우리의 포스터에 담기</button>
+  </div>
+</div>
+
+<!-- poster viewer -->
+<div id="viewer" class="sheet" hidden>
+  <div class="inner">
+    <div class="sheet-top"><h3 id="vTitle">포스터</h3><button class="x" data-close="viewer" type="button" aria-label="닫기"><span class="ms">close</span></button></div>
+    <img id="vImg" class="stage" alt="">
+    <p class="hint" id="vHint">저장이 안 되면 포스터를 꾹 눌러 저장하세요</p>
+    <div class="row">
+      <button class="btn primary" id="vSave" type="button"><span class="ms" aria-hidden="true">download</span>휴대폰에 저장</button>
+      <button class="btn" id="vDel" type="button"><span class="ms" aria-hidden="true">delete</span><span id="vDelLabel">지우기</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- video -->
+<div id="video" class="sheet" hidden>
+  <div class="inner">
+    <div class="sheet-top"><h3>우리의 대전 영상</h3><button class="x" data-close="video" type="button" aria-label="닫기"><span class="ms">close</span></button></div>
+    <canvas id="vCanvas" class="stage" width="720" height="1280"></canvas>
+    <div class="kakao-tip" data-kakao hidden>카카오톡 안에서는 영상 저장이 안 될 수 있어요. 오른쪽 위 ⋮ → '다른 브라우저로 열기'로 열어 주세요.</div>
+    <div class="progress" id="recBar" hidden><i></i></div>
+    <p class="hint" id="recHint">미리보기가 계속 반복돼요. 마음에 들면 저장하세요.</p>
+    <div class="songs-h"><b>배경음악 고르기</b><small>누르면 바로 들려요 · 아이폰은 무음 모드를 꺼 주세요</small></div>
+    <div class="songs" id="songList"></div>
+    <button class="btn red" id="recBtn" type="button"><span class="ms" aria-hidden="true">movie</span>영상 만들어 저장하기</button>
+    <button class="btn" id="resave" type="button" hidden><span class="ms" aria-hidden="true">download</span><span id="resaveLabel">방금 만든 영상 다시 저장하기</span></button>
+    <video id="vOut" class="stage" controls playsinline hidden></video>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ================= data ================= */
+const PLACES = [
+  /* ---- 카페 ---- */
+  {id:"sojedong", cat:"cafe", emoji:"🏡", name:"소제동 카페거리", short:"소제동", area:"동구 소제동 · 대전역 뒤", icon:"cafe", desc:"옛 철도관사 마을을 고친 카페들이 모인 골목. 오래된 집 안에서 마시는 따뜻한 커피.", tags:["dad","mom","가족"], kw:"카페 관사촌 철도"},
+  {id:"pungnyuga", cat:"cafe", emoji:"🎋", name:"풍뉴가", short:"풍뉴가", area:"동구 소제동", icon:"cafe", desc:"대나무 숲 정원을 품은 소제동 대표 카페. 창 너머 대숲을 보며 차 한잔.", tags:["dad","mom","사진 맛집"], kw:"대나무 카페 소제동"},
+  {id:"gwansa16", cat:"cafe", emoji:"🚂", name:"관사16호", short:"관사16호", area:"동구 소제동", icon:"cafe", desc:"철도관사 건물을 그대로 살린 카페. 옛 정취가 남아 있어 부모님 세대가 특히 좋아하세요.", tags:["dad","가족"], kw:"카페 관사 소제동"},
+  {id:"daecheong-cafe", cat:"cafe", emoji:"☕", name:"루아르 (대청호 뷰)", short:"루아르", area:"동구 회남로 · 대청호", icon:"lake", desc:"대청호가 시원하게 내려다보이는 카페. 바깥은 추워도 통창 안은 따뜻해요. 주차 가능.", tags:["dad","mom","호수 뷰"], kw:"카페 호수 대청호 루아르"},
+  {id:"pangsion", cat:"cafe", emoji:"🌊", name:"팡시온 (대청호)", short:"팡시온", area:"동구 · 대청호 명상정원 근처", icon:"lake", desc:"대청호 명상정원에서 차로 5분. 호수 풍경과 함께 쉬어 가기 좋은 카페.", tags:["dad","호수 뷰"], kw:"카페 대청호 팡시온"},
+  {id:"garaeul", cat:"cafe", emoji:"🏞️", name:"가래울 (대청호)", short:"가래울", area:"동구 · 대청호", icon:"lake", desc:"대청호 드라이브 길에 들르기 좋은 호숫가 카페.", tags:["dad","호수 뷰"], kw:"카페 대청호 가래울"},
+  {id:"mikmat", cat:"cafe", emoji:"🪟", name:"미크맷", short:"미크맷", area:"서구 용소로", icon:"cafe", desc:"햇살 가득 들어오는 통유리 창가가 명당. 직접 로스팅하는 커피.", tags:["dad","데이트"], kw:"카페 로스터리 통창"},
+  {id:"adobe", cat:"cafe", emoji:"🏠", name:"어도비 하우스", short:"어도비 하우스", area:"중구 대흥동", icon:"cafe", desc:"주택을 고친 아늑한 카페. 2층 자리와 저녁 마당 조명이 예뻐요.", tags:["dad","mom","데이트"], kw:"카페 주택 대흥동"},
+  {id:"morningtree", cat:"cafe", emoji:"🌳", name:"모닝트리", short:"모닝트리", area:"유성구 구암동", icon:"cafe", desc:"넓고 쾌적한 대형 카페. 음료와 디저트 평이 좋아요.", tags:["dad","대형 카페"], kw:"카페 대형 구암동"},
+  {id:"moodbeige", cat:"cafe", emoji:"🤍", name:"무드 베이지", short:"무드 베이지", area:"유성구", icon:"cafe", desc:"화이트와 베이지 톤의 밝은 카페. 테이블 간격이 넉넉해 대화하기 편해요.", tags:["mom","데이트"], kw:"카페 감성"},
+  /* ---- 빵지순례 ---- */
+  {id:"sungsimdang", cat:"bread", emoji:"🥐", name:"성심당 본점", short:"성심당", area:"중구 은행동", icon:"bread", desc:"1956년부터 이어진 대전의 빵집. 튀김소보로, 판타롱부추빵은 꼭. 오늘 밤 와인 안주도 여기서.", tags:["dad","가족","대전 필수"], kw:"빵 베이커리 튀김소보로", note:"줄이 길면 오전 일찍 가세요"},
+  {id:"ssd-cake", cat:"bread", emoji:"🍰", name:"성심당 케익부띠끄", short:"케익부띠끄", area:"중구 은행동 · 본점 근처", icon:"bread", desc:"성심당의 케이크 전문 매장. 딸기시루 같은 시그니처 케이크로 유명해요.", tags:["가족","디저트"], kw:"케이크 성심당 딸기시루"},
+  {id:"mongsim", cat:"bread", emoji:"🧈", name:"몽심", short:"몽심", area:"대전 지점 3곳 · 한남대점, 도안점, 대흥점", icon:"bread", desc:"대전 빵축제 어워즈 1위 이력의 빵집. 한남대점은 마들렌, 도안점은 소금식빵, 대흥점은 바게트.", tags:["dad","빵지순례"], kw:"빵 마들렌 소금빵"},
+  {id:"jeongdong", cat:"bread", emoji:"🥧", name:"정동문화사", short:"정동문화사", area:"동구 정동 · 대전역 근처", icon:"bread", desc:"피낭시에, 에그타르트, 까눌레 딱 세 가지만 굽는 곳. 하루 수량이 정해져 있어요.", tags:["빵지순례","한정 수량"], kw:"에그타르트 까눌레 피낭시에"},
+  {id:"gotgan", cat:"bread", emoji:"🍓", name:"곳간집", short:"곳간집", area:"대전", icon:"bread", desc:"제철 과일 타르트와 케이크로 유명해요. 인기 메뉴는 예약이 필요할 수 있어요.", tags:["mom","디저트"], kw:"타르트 과일 케이크"},
+  {id:"gwanjeodang", cat:"bread", emoji:"🥖", name:"관저당", short:"관저당", area:"서구 관저동", icon:"bread", desc:"바게트, 치아바타 같은 담백한 하드빵 전문. 샌드위치도 인기.", tags:["mom","건강한 빵"], kw:"바게트 치아바타 샌드위치"},
+  {id:"hanmogeum", cat:"bread", emoji:"🥟", name:"빵 한모금", short:"빵 한모금", area:"동구 자양동", icon:"bread", desc:"파이 전문점으로 시작한 빵집. 바삭한 파이가 대표 메뉴예요.", tags:["dad","빵지순례"], kw:"파이 자양동"},
+  {id:"soultobakery", cat:"bread", emoji:"🧂", name:"소올투베이커리", short:"소올투", area:"대전", icon:"bread", desc:"소금빵으로 이름난 빵집. 와인 안주로도 잘 어울려요.", tags:["빵지순례"], kw:"소금빵"},
+  {id:"bemust", cat:"bread", emoji:"🌱", name:"비머스트", short:"비머스트", area:"대전", icon:"leaf", desc:"글루텐프리, 비건 디저트 전문. 건강하게 드시는 어머님께 추천.", tags:["mom","건강식"], kw:"비건 글루텐프리 디저트"},
+  {id:"lepain991", cat:"bread", emoji:"🍞", name:"르뺑99-1", short:"르뺑99-1", area:"대전", icon:"bread", desc:"현지인이 성심당 다음으로 꼽는 동네 빵집.", tags:["빵지순례"], kw:"빵집 르뺑"},
+  {id:"sipbbang", cat:"bread", emoji:"🥐", name:"싶빵공장", short:"싶빵공장", area:"대전", icon:"bread", desc:"결이 살아있는 크루아상으로 유명한 빵집.", tags:["빵지순례"], kw:"크루아상"},
+  {id:"rorone", cat:"bread", emoji:"💚", name:"로로네베이커리", short:"로로네", area:"대전", icon:"bread", desc:"피스타치오 크림 페이스트리가 대표 메뉴인 요즘 뜨는 빵집.", tags:["데이트","빵지순례"], kw:"피스타치오 페이스트리"},
+  {id:"coldbutter", cat:"bread", emoji:"🧁", name:"콜드버터베이크샵", short:"콜드버터", area:"대전", icon:"bread", desc:"버터 향 가득한 구움과자로 인기인 베이크샵.", tags:["데이트","디저트"], kw:"구움과자 버터"},
+  {id:"harehare", cat:"bread", emoji:"🍩", name:"하레하레", short:"하레하레", area:"대전 · 지점 여러 곳", icon:"bread", desc:"대전 사람들이 즐겨 찾는 빵집. 종류가 많아 고르는 재미가 있어요.", tags:["가족","빵지순례"], kw:"빵집"},
+  /* ---- 건강한 한 끼 ---- */
+  {id:"sanchae", cat:"healthy", emoji:"🥬", name:"동학사 산채정식", short:"산채정식", area:"계룡산 동학사 입구 · 유성에서 차로 20~30분", icon:"leaf", desc:"산나물 반찬이 한 상 가득 나오는 건강한 밥상. 식사 후 계곡 입구를 잠깐 걸어도 좋아요.", tags:["mom","dad","가족"], kw:"나물 비빔밥 계룡산 동학사 한정식"},
+  {id:"chogajip", cat:"healthy", emoji:"🫘", name:"초가집 (손두부)", short:"초가집", area:"서구 갈마동", icon:"tofu", desc:"직접 만든 손두부와 수육, 여러 김치를 담백하게. 점심 장사 위주예요.", tags:["mom","건강식"], kw:"두부 손두부 수육 갈마동", note:"일요일 휴무 · 토요일 점심에 가세요"},
+  {id:"gukbap", cat:"healthy", emoji:"🥣", name:"원조태평소국밥", short:"소국밥", area:"유성구", icon:"soup", desc:"맑은 소고기 국물의 국밥. 와인 마신 다음 날 아침 해장으로 든든해요.", tags:["mom","dad","해장"], kw:"국밥 소고기 태평 해장 갈비탕"},
+  {id:"mukmaeul", cat:"healthy", emoji:"🟫", name:"구즉 묵마을", short:"묵마을", area:"유성구 봉산동 일대", icon:"tofu", desc:"도토리묵 요리를 내는 대전 향토 음식 골목. 담백하고 가벼운 한 끼.", tags:["mom","건강식"], kw:"도토리묵 묵밥 구즉"},
+  {id:"ongi", cat:"healthy", emoji:"🍱", name:"온기 (한식)", short:"온기", area:"대전", icon:"dinner", desc:"독립된 룸이 있는 한식당이라 가족 식사로 편해요.", tags:["mom","가족"], kw:"한식 룸 가족모임"},
+  {id:"gamjabawi", cat:"healthy", emoji:"🥔", name:"감자바위골", short:"감자바위골", area:"중구 문창동", icon:"noodle", desc:"바삭하고 두툼한 감자전과 칼국수, 수제비. 소박하고 든든해요.", tags:["mom","dad","노포"], kw:"감자전 수제비 칼국수", note:"월요일 휴무"},
+  {id:"bibimbap-gyeryong", cat:"healthy", emoji:"🍚", name:"보리밥 · 쌈밥 정식", short:"보리밥", area:"대전 곳곳", icon:"tofu", desc:"보리밥에 나물과 쌈을 곁들이는 정식. 네이버지도에서 '대전 보리밥'으로 가까운 곳을 찾아보세요.", tags:["mom","건강식"], kw:"보리밥 쌈밥 나물"},
+  {id:"juk", cat:"healthy", emoji:"🥄", name:"따끈한 죽 한 그릇", short:"죽", area:"대전 곳곳", icon:"soup", desc:"와인 마신 다음 날 아침, 속 편한 전복죽이나 호박죽. 숙소 근처에서 찾아보세요.", tags:["mom","해장"], kw:"죽 전복죽 아침"},
+  /* ---- 대전 맛집 ---- */
+  {id:"tofu", cat:"food", emoji:"🍲", name:"진로집 (두부두루치기)", short:"진로집", area:"중구 대흥동", icon:"tofu", desc:"대전 향토 음식 두부두루치기의 원조로 꼽히는 집. 칼국수 사리를 넣어 먹어요. 맵기 조절 가능.", tags:["dad","mom","대전 필수"], kw:"두부 두루치기 대흥동 진로집"},
+  {id:"gwangcheon", cat:"food", emoji:"🌶️", name:"광천식당", short:"광천식당", area:"중구 · 원도심", icon:"tofu", desc:"두부오징어두루치기로 유명한 노포. 매콤달콤한 양념에 칼국수 면을 비벼요.", tags:["dad","노포"], kw:"두루치기 오징어 두부"},
+  {id:"kalguksu", cat:"food", emoji:"🍜", name:"오씨칼국수", short:"오씨칼국수", area:"대전", icon:"noodle", desc:"동죽(물총조개)을 듬뿍 넣은 시원한 칼국수와 해물파전.", tags:["dad","mom","대전 필수"], kw:"칼국수 물총 동죽 해물파전"},
+  {id:"smile", cat:"food", emoji:"😊", name:"스마일칼국수", short:"스마일칼국수", area:"대전", icon:"noodle", desc:"대전 사람들이 오래 다닌 칼국수집. 얼큰한 국물이 별미.", tags:["dad","노포"], kw:"칼국수 얼큰"},
+  {id:"sindo", cat:"food", emoji:"🍜", name:"신도칼국수", short:"신도칼국수", area:"동구 · 대전역 근처", icon:"noodle", desc:"대전역 앞을 오래 지켜온 칼국수 노포. 사골 국물에 소박한 한 그릇.", tags:["dad","mom","노포"], kw:"칼국수 대전역 노포"},
+  {id:"simin", cat:"food", emoji:"🔥", name:"시민칼국수", short:"시민칼국수", area:"대전", icon:"noodle", desc:"얼큰한 칼국수와 두부두루치기를 함께 먹을 수 있는 집.", tags:["dad"], kw:"칼국수 얼큰 두루치기"},
+  {id:"gimhwa", cat:"food", emoji:"🥢", name:"김화칼국수", short:"김화칼국수", area:"대전", icon:"noodle", desc:"칼국수에 두루치기를 곁들이는 대전식 조합으로 알려진 집.", tags:["dad"], kw:"칼국수 두루치기"},
+  {id:"hongdugae", cat:"food", emoji:"🪵", name:"홍두깨칼국수", short:"홍두깨", area:"대전", icon:"noodle", desc:"얼큰이나 바지락 칼국수에 두부두루치기를 곁들이는 조합.", tags:["dad"], kw:"칼국수 바지락 얼큰이"},
+  {id:"jeokdeok", cat:"food", emoji:"🌶️", name:"적덕식당", short:"적덕식당", area:"대전", icon:"dinner", desc:"50년 전통을 내세우는 노포. 매콤한 맛으로 입맛을 살려줘요.", tags:["dad","노포"], kw:"노포 매콤"},
+  {id:"daedong-sundae", cat:"food", emoji:"🌭", name:"대동순대", short:"대동순대", area:"중구 문화동", icon:"soup", desc:"막창순대로 이름난 집. 한정 판매라 일찍 가는 게 좋아요.", tags:["dad"], kw:"순대 막창 문화동"},
+  {id:"omunchang", cat:"food", emoji:"🍲", name:"오문창순대국밥", short:"오문창", area:"대덕구 중리동", icon:"soup", desc:"방송에 나와 더 유명해진 순대국밥집. 쌀쌀한 날 뜨끈하게.", tags:["dad","해장"], kw:"순대국밥 중리동"},
+  {id:"sutgol", cat:"food", emoji:"🍜", name:"숯골원냉면", short:"숯골원", area:"유성구", icon:"noodle", desc:"대전의 대표 평양냉면 노포. 추운 날에도 찾는 사람이 많아요.", tags:["dad","노포"], kw:"냉면 평양냉면"},
+  /* ---- 따뜻한 실내 ---- */
+  {id:"science", cat:"indoor", emoji:"🔭", name:"국립중앙과학관", short:"국립중앙과학관", area:"유성구 대덕연구단지", icon:"science", desc:"넓은 실내 전시관을 천천히 둘러보기 좋아요. 과학의 도시 대전다운 곳.", tags:["가족","무료 전시"], kw:"과학관 박물관 전시", note:"월요일 휴관 · 주말 운영"},
+  {id:"shinsegae", cat:"indoor", emoji:"🏙️", name:"대전신세계 Art & Science", short:"엑스포타워", area:"유성구 엑스포로", icon:"tower", desc:"엑스포타워 전망대, 아쿠아리움, 식당가가 한 건물에. 추운 날 하루 종일 따뜻해요.", tags:["가족","전망"], kw:"신세계 백화점 전망대 아쿠아리움 엑스포타워"},
+  {id:"artmuseum", cat:"indoor", emoji:"🖼️", name:"대전시립미술관", short:"시립미술관", area:"서구 만년동 · 한밭수목원 옆", icon:"art", desc:"계절마다 바뀌는 기획전. 조용히 그림 보며 몸 녹이기 좋아요.", tags:["mom","데이트"], kw:"미술관 전시 그림", note:"월요일 휴관"},
+  {id:"leeungno", cat:"indoor", emoji:"🎨", name:"이응노미술관", short:"이응노미술관", area:"서구 만년동", icon:"art", desc:"대전 출신 화가 이응노의 작품을 모은 미술관. 건물도 아름다워요.", tags:["mom","데이트"], kw:"미술관 전시 그림 이응노", note:"월요일 휴관"},
+  {id:"heredium", cat:"indoor", emoji:"🏛️", name:"헤레디움", short:"헤레디움", area:"동구 인동", icon:"museum", desc:"100년 된 근대 건물을 고친 복합문화공간. 현대미술 전시가 열려요.", tags:["mom","데이트","근대건축"], kw:"전시 근대건축 미술"},
+  {id:"citymuseum", cat:"indoor", emoji:"🏺", name:"대전시립박물관", short:"시립박물관", area:"유성구 도안동", icon:"museum", desc:"대전의 역사를 한눈에. 동절기 관람 10:00~18:00.", tags:["가족","무료 전시"], kw:"박물관 역사", note:"월요일 휴관"},
+  {id:"money", cat:"indoor", emoji:"🪙", name:"화폐박물관", short:"화폐박물관", area:"유성구 가정동 · 한국조폐공사", icon:"museum", desc:"우리 돈의 역사와 위조 방지 기술을 볼 수 있어요. 아버님이 특히 재미있어하실 곳.", tags:["dad","가족"], kw:"화폐 돈 조폐공사", note:"월요일 휴관"},
+  {id:"geology", cat:"indoor", emoji:"🦕", name:"지질박물관", short:"지질박물관", area:"유성구 과학로", icon:"science", desc:"공룡 화석과 광물 전시. 생각보다 볼거리가 많아요.", tags:["가족","무료 전시"], kw:"공룡 화석 광물 박물관", note:"월요일 휴관"},
+  {id:"natmon", cat:"indoor", emoji:"🦌", name:"천연기념물센터", short:"천연기념물센터", area:"서구 · 한밭수목원 근처", icon:"forest", desc:"우리나라 천연기념물 동식물을 전시한 곳. 수목원과 묶어서 가기 좋아요.", tags:["가족","무료 전시"], kw:"천연기념물 전시", note:"월요일 휴관"},
+  {id:"aquarium", cat:"indoor", emoji:"🐠", name:"대전아쿠아리움", short:"대전아쿠아리움", area:"중구 대사동 · 보문산", icon:"lake", desc:"보문산 자락의 아쿠아리움. 추운 날 실내에서 물고기 구경.", tags:["가족","데이트"], kw:"아쿠아리움 수족관 보문산"},
+  {id:"kkumdori", cat:"indoor", emoji:"🛸", name:"꿈돌이 하우스", short:"꿈돌이", area:"동구 · 대전역", icon:"travel", desc:"대전 엑스포 마스코트 꿈돌이를 테마로 한 공간. 대전역과 이어져 가볍게 들르기 좋아요.", tags:["가족","기념품"], kw:"꿈돌이 굿즈 대전역"},
+  {id:"modernhistory", cat:"indoor", emoji:"🏢", name:"대전근현대사전시관", short:"옛 충남도청", area:"중구 선화동 · 옛 충남도청", icon:"museum", desc:"1932년 지어진 옛 충남도청 건물. 건물 자체가 볼거리예요.", tags:["dad","근대건축"], kw:"충남도청 근현대사 전시", note:"월요일 휴관"},
+  {id:"artscenter", cat:"indoor", emoji:"🎻", name:"대전예술의전당", short:"예술의전당", area:"서구 만년동", icon:"art", desc:"주말 공연이 있으면 저녁 코스로 좋아요. 공연 일정은 홈페이지에서 확인.", tags:["mom","데이트"], kw:"공연 음악회 연주"},
+  {id:"outlet", cat:"indoor", emoji:"🛍️", name:"현대프리미엄아울렛 대전", short:"현대아울렛", area:"유성구 용산동", icon:"shop", desc:"쇼핑, 식당, 실내 놀거리가 한곳에. 추운 날 따뜻하게 오래 머물기 좋아요.", tags:["가족","쇼핑"], kw:"아울렛 쇼핑 현대"},
+  {id:"timeworld", cat:"indoor", emoji:"🏬", name:"갤러리아 타임월드", short:"타임월드", area:"서구 둔산동", icon:"shop", desc:"둔산동 중심의 백화점. 식당가와 식품관이 잘 되어 있어요.", tags:["가족","쇼핑"], kw:"백화점 갤러리아 둔산"},
+  {id:"maisondrawing", cat:"indoor", emoji:"✏️", name:"무인 화실 메종드로잉", short:"메종드로잉", area:"대전", icon:"art", desc:"자유롭게 그림을 그리는 무인 화실. 셋이 서로 얼굴 그려주기 어떠세요?", tags:["데이트","체험"], kw:"화실 그림 체험 드로잉"},
+  {id:"stepup", cat:"indoor", emoji:"🕹️", name:"스텝업", short:"스텝업", area:"대전", icon:"travel", desc:"바닥과 벽의 발판을 밟으며 미션을 푸는 실내 게임. 가족끼리 의외로 신나요.", tags:["데이트","체험"], kw:"게임 체험 실내 미션"},
+  /* ---- 산책 · 자연 ---- */
+  {id:"hanbat", cat:"walk", emoji:"🌿", name:"한밭수목원", short:"한밭수목원", area:"서구 만년동", icon:"forest", desc:"도심 속 넓은 수목원. 열대식물원은 실내라 따뜻해요.", tags:["가족","산책"], kw:"수목원 열대식물원 산책", note:"동원은 월요일 휴원"},
+  {id:"jangtaesan", cat:"walk", emoji:"🌲", name:"장태산 자연휴양림", short:"장태산", area:"서구 장안동", icon:"forest", desc:"메타세쿼이아 숲과 출렁다리. 햇살 좋은 한낮에 짧게 걷기 좋아요.", tags:["가족","산책"], kw:"휴양림 메타세쿼이아 출렁다리 숲"},
+  {id:"gyejoksan", cat:"walk", emoji:"🦶", name:"계족산 황톳길", short:"계족산", area:"대덕구 장동", icon:"forest", desc:"맨발 걷기로 유명한 황톳길. 지금은 추우니 신발 신고 숲길만 살짝.", tags:["산책"], kw:"황톳길 맨발 계족산"},
+  {id:"bomunsan", cat:"walk", emoji:"⛰️", name:"보문산", short:"보문산", area:"중구 대사동", icon:"forest", desc:"대전 도심 가까운 산. 전망대에서 시내가 내려다보여요.", tags:["산책","전망"], kw:"보문산 전망대 보운대"},
+  {id:"sangso", cat:"walk", emoji:"🪨", name:"상소동 산림욕장", short:"상소동", area:"동구 상소동", icon:"forest", desc:"돌탑이 줄지어 선 이국적인 숲. 사진이 예쁘게 나와요.", tags:["가족","사진 맛집"], kw:"돌탑 산림욕장"},
+  {id:"meditation", cat:"walk", emoji:"🧘", name:"대청호 명상정원", short:"명상정원", area:"동구 · 대청호", icon:"lake", desc:"물가로 이어진 데크길과 호수 풍경. 입장료, 주차비 무료.", tags:["가족","호수 뷰"], kw:"대청호 명상정원 산책"},
+  {id:"waterculture", cat:"walk", emoji:"💧", name:"대청댐 물문화관", short:"대청댐", area:"대덕구 · 대청댐", icon:"lake", desc:"댐 위 풍경과 실내 전시를 함께. 대청호 드라이브의 시작점으로 좋아요.", tags:["가족","드라이브"], kw:"대청댐 물문화관"},
+  {id:"rohas", cat:"walk", emoji:"🚲", name:"금강로하스 대청공원", short:"로하스공원", area:"대덕구 · 대청댐 아래", icon:"lake", desc:"금강 따라 넓게 펼쳐진 수변공원. 해 좋은 오후 산책 코스.", tags:["가족","산책"], kw:"로하스 수변공원 금강"},
+  {id:"ppuri", cat:"walk", emoji:"🌳", name:"뿌리공원", short:"뿌리공원", area:"중구 침산동", icon:"forest", desc:"성씨별 조형물이 모인 이색 공원. 신씨, 윤씨 조형물을 찾아 가족사진 한 장!", tags:["가족","재미"], kw:"성씨 족보 공원"},
+  {id:"daedong", cat:"walk", emoji:"🎨", name:"대동하늘공원", short:"대동하늘공원", area:"동구 대동", icon:"night", desc:"알록달록한 벽화 골목 위 풍차 언덕. 해질녘부터 시내 야경이 예뻐요.", tags:["데이트","야경"], kw:"벽화 풍차 달동네 야경"},
+  {id:"dongchundang", cat:"walk", emoji:"🏯", name:"동춘당", short:"동춘당", area:"대덕구 송촌동", icon:"museum", desc:"조선 선비 송준길의 고택. 단정한 한옥을 둘러보는 짧은 산책.", tags:["dad","한옥"], kw:"한옥 고택 송준길"},
+  {id:"uam", cat:"walk", emoji:"🏮", name:"우암사적공원", short:"우암사적공원", area:"동구 가양동", icon:"museum", desc:"송시열을 기리는 한옥 공원. 고즈넉한 한옥 배경으로 사진 찍기 좋아요.", tags:["dad","한옥"], kw:"한옥 송시열 사적"},
+  {id:"kaist", cat:"walk", emoji:"🎓", name:"카이스트 캠퍼스", short:"카이스트", area:"유성구 구성동", icon:"science", desc:"연못과 넓은 잔디가 있는 캠퍼스 산책. 거위 가족이 유명해요.", tags:["가족","산책"], kw:"카이스트 캠퍼스 산책 거위"},
+  {id:"yurim", cat:"walk", emoji:"🍂", name:"유림공원", short:"유림공원", area:"유성구 봉명동", icon:"forest", desc:"갑천 옆 정원식 공원. 유성온천과 가까워 함께 묶기 좋아요.", tags:["가족","산책"], kw:"유림공원 갑천"},
+  {id:"hanbit", cat:"walk", emoji:"🗼", name:"한빛탑 · 엑스포다리", short:"한빛탑", area:"유성구 엑스포과학공원", icon:"tower", desc:"1993 대전 엑스포의 상징. 다리 위에서 가족사진 한 장 찍고 따뜻한 곳으로.", tags:["가족","대전 필수"], kw:"엑스포 다리 탑 갑천"},
+  /* ---- 야경 · 드라이브 ---- */
+  {id:"sikjangsan", cat:"night", emoji:"🌃", name:"식장산 전망대", short:"식장산", area:"동구 · 식장산 문화공원", icon:"night", desc:"대전 시내 불빛이 한눈에 보이는 대표 야경 명소. 산길이라 천천히.", tags:["드라이브","데이트"], kw:"야경 전망대 식장산"},
+  {id:"expo-night", cat:"night", emoji:"🌉", name:"엑스포다리 · 한빛탑 야경", short:"엑스포 야경", area:"유성구 도룡동", icon:"drive", desc:"불 켜진 한빛탑과 엑스포다리. 저녁에는 미디어파사드도 볼 수 있어요(운영 일정 확인).", tags:["드라이브","데이트"], kw:"야경 다리 한빛탑 미디어파사드"},
+  {id:"gapcheon", cat:"night", emoji:"🚗", name:"갑천변 야간 드라이브", short:"갑천 드라이브", area:"유성구 · 서구 갑천변", icon:"drive", desc:"엑스포타워와 도심 불빛을 보며 갑천을 따라 달리는 코스. 차 안에서 편하게.", tags:["드라이브"], kw:"갑천 드라이브 야경"},
+  {id:"daecheong-drive", cat:"night", emoji:"🌅", name:"대청호 노을 드라이브", short:"대청호", area:"동구 · 대덕구 대청호 일대", icon:"lake", desc:"해 질 무렵 호숫가 길을 따라. 노을 보고 근처 카페에서 몸 녹이기.", tags:["드라이브","노을"], kw:"호수 노을 드라이브 대청댐"},
+  {id:"daecheongbridge", cat:"night", emoji:"🌉", name:"대청교 · 대청댐 야경", short:"대청교", area:"대덕구 · 대청댐", icon:"night", desc:"호수 위로 비치는 조명이 고요하고 예뻐요.", tags:["드라이브"], kw:"대청교 대청댐 야경"},
+  {id:"bounde", cat:"night", emoji:"🌆", name:"보문산 보운대 야경", short:"보운대", area:"중구 · 보문산", icon:"night", desc:"보문산 위에서 보는 원도심 야경.", tags:["드라이브","야경"], kw:"보문산 보운대 야경"},
+  {id:"towernight", cat:"night", emoji:"🏙️", name:"엑스포타워 전망대 야경", short:"타워 야경", area:"유성구 · 대전신세계", icon:"tower", desc:"춥지 않게 실내에서 보는 대전 야경. 운영 시간은 미리 확인하세요.", tags:["가족","데이트"], kw:"전망대 야경 신세계"},
+  {id:"skyroad", cat:"night", emoji:"✨", name:"으능정이 스카이로드", short:"스카이로드", area:"중구 은행동", icon:"night", desc:"거리 위 천장이 대형 LED 화면인 문화의 거리. 성심당과 바로 이어져요.", tags:["가족","야경"], kw:"으능정이 스카이로드 LED 은행동"},
+  /* ---- 시장 · 골목 ---- */
+  {id:"jungang", cat:"market", emoji:"🏮", name:"대전 중앙시장", short:"중앙시장", area:"동구 · 대전역 앞", icon:"market", desc:"만두, 닭강정, 순대, 칼국수 먹자골목. 저녁엔 야시장 분위기도 좋아요.", tags:["dad","mom","가족"], kw:"시장 먹자골목 야시장"},
+  {id:"hanmin", cat:"market", emoji:"🥬", name:"한민시장", short:"한민시장", area:"서구", icon:"market", desc:"채소, 생선, 먹거리가 가득한 동네 큰 시장. 구경하는 재미가 있어요.", tags:["mom","시장"], kw:"시장 한민"},
+  {id:"doma", cat:"market", emoji:"🧺", name:"도마큰시장", short:"도마큰시장", area:"서구 도마동", icon:"market", desc:"현지인이 장 보는 활기찬 재래시장.", tags:["mom","시장"], kw:"시장 도마"},
+  {id:"eunhaeng", cat:"market", emoji:"🛍️", name:"은행동 원도심 골목", short:"은행동", area:"중구 은행동", icon:"market", desc:"성심당, 스카이로드, 오래된 가게들이 모인 원도심 산책 코스.", tags:["가족","골목"], kw:"원도심 은행동 골목"},
+  {id:"temi", cat:"market", emoji:"🏘️", name:"테미오래", short:"테미오래", area:"중구 대흥동 · 옛 관사촌", icon:"museum", desc:"옛 도지사 관사촌을 문화공간으로 꾸민 곳. 근대 주택 구경.", tags:["dad","근대건축"], kw:"관사촌 근대 테미오래", note:"월요일 휴관"},
+  {id:"daeheung", cat:"market", emoji:"☕", name:"대흥동 카페 골목", short:"대흥동", area:"중구 대흥동", icon:"cafe", desc:"작은 카페와 오래된 맛집이 섞여 있는 원도심 골목.", tags:["데이트","골목"], kw:"대흥동 골목 카페"},
+  {id:"jeongdong-alley", cat:"market", emoji:"🚉", name:"대전역 · 정동 골목", short:"정동", area:"동구 정동", icon:"travel", desc:"대전역 주변 오래된 골목과 노포들. 소제동과 이어서 걸어 보세요.", tags:["dad","골목"], kw:"대전역 정동 골목 노포"},
+  /* ---- 온천 · 힐링 ---- */
+  {id:"yuseong", cat:"spa", emoji:"♨️", name:"유성온천 족욕체험장", short:"유성온천", area:"유성구 봉명동 · 온천공원", icon:"spa", desc:"40℃ 안팎의 천연 온천수에 발 담그기. 무료, 08:00~22:00. 노천이라 날씨를 보고 가세요.", tags:["mom","dad","무료"], kw:"온천 족욕 봉명동"},
+  {id:"spatel", cat:"spa", emoji:"🛁", name:"계룡스파텔 대온천탕", short:"계룡스파텔", area:"유성구 봉명동", icon:"spa", desc:"유성의 대표 온천 대중탕. 몸 푹 녹이고 저녁 먹으러 가기 좋아요.", tags:["mom","dad","온천"], kw:"온천 대중탕 목욕"},
+  {id:"spa-street", cat:"spa", emoji:"🌡️", name:"유성 온천로 산책", short:"온천로", area:"유성구 봉명동", icon:"spa", desc:"족욕장, 유림공원, 맛집이 이어진 온천 동네 산책.", tags:["가족","산책"], kw:"유성 온천 봉명동 산책"},
+  /* ---- 와인바 준비 ---- */
+  {id:"wine-ssd", cat:"wine", emoji:"🥖", name:"성심당 (와인 안주용)", short:"안주 쇼핑", area:"중구 은행동", icon:"bread", desc:"바게트, 치즈빵, 소금빵에 과일 조금이면 홈 와인바 안주 완성.", tags:["오늘 밤"], kw:"와인 안주 빵 치즈"},
+  {id:"wine-shinsegae", cat:"wine", emoji:"🧀", name:"대전신세계 식품관", short:"신세계 식품관", area:"유성구 엑스포로", icon:"shop", desc:"와인 코너와 치즈, 햄, 과일을 한 번에. 오늘 밤 와인바 장보기.", tags:["오늘 밤","쇼핑"], kw:"와인 치즈 식품관 장보기"},
+  {id:"wine-timeworld", cat:"wine", emoji:"🍇", name:"갤러리아 타임월드 식품관", short:"타임월드 식품관", area:"서구 둔산동", icon:"shop", desc:"둔산동에서 가까운 식품관. 와인과 안주거리 장보기.", tags:["오늘 밤","쇼핑"], kw:"와인 치즈 식품관"}
+];
+const FIXED = {
+  wine:{id:"wine", emoji:"🍷", name:"신가네 홈 와인바 오픈", short:"홈 와인바", sub:"토요일 밤 · 셋이서 건배! 안주는 성심당 빵과 치즈로", icon:"wine"},
+  bday:{id:"bday", emoji:"🍽️", name:"사위와 함께 저녁", short:"다 같이 저녁", sub:"일요일 저녁 · 부산에서 사위가 합류해요", icon:"dinner"},
+  bye:{id:"bye", emoji:"👋", name:"작별 인사", short:"또 만나요", sub:"본가로 올라가시는 길 · 조심히 올라가세요", icon:"bye"}
+};
+const SLOTS = {sat:{label:"11.21 토 · 와인바 오픈 전", short:"토요일, 와인바 오픈 전"}, night:{label:"11.21 토 · 와인바 오픈 뒤", short:"토요일 밤, 와인바 오픈 뒤"}, sun:{label:"11.22 일 · 생일 저녁 전", short:"일요일, 생일 저녁 전"}};
+const CATS = [["all","전체"],["cafe","카페"],["bread","빵지순례"],["healthy","건강한 한 끼"],["food","대전 맛집"],["indoor","따뜻한 실내"],["walk","산책 · 자연"],["night","야경 · 드라이브"],["market","시장 · 골목"],["spa","온천 · 힐링"],["wine","와인바 준비"]];
+const ICONS = {
+  bread:["빵 · 커피",["bakery_dining","local_cafe","favorite"]], cafe:["카페",["local_cafe","coffee_maker","favorite"]],
+  lake:["호수 · 노을",["water","sailing","wb_twilight"]], tofu:["밥 · 건강",["rice_bowl","eco","favorite"]],
+  leaf:["나물 · 산",["eco","landscape","rice_bowl"]], soup:["국 · 따끈",["soup_kitchen","local_fire_department","favorite"]],
+  noodle:["국수",["ramen_dining","restaurant","favorite"]], science:["과학",["science","rocket_launch","auto_awesome"]],
+  tower:["탑 · 별",["location_city","auto_awesome","nightlight"]], art:["미술",["palette","brush","favorite"]],
+  spa:["온천",["hot_tub","water_drop","spa"]], forest:["숲 · 산",["forest","park","landscape"]],
+  night:["야경",["nightlight","auto_awesome","landscape"]], drive:["드라이브",["directions_car","nightlight","auto_awesome"]],
+  wine:["와인",["wine_bar","nightlife","favorite"]], cake:["생일",["cake","celebration","favorite"]],
+  bye:["작별 인사",["waving_hand","directions_car","favorite"]], home:["집",["home","weekend","favorite"]],
+  dinner:["다 같이 식사",["restaurant","favorite","celebration"]], market:["시장",["storefront","restaurant","favorite"]],
+  museum:["박물관 · 한옥",["museum","account_balance","auto_awesome"]], shop:["쇼핑",["shopping_bag","wine_bar","favorite"]],
+  travel:["여행",["photo_camera","favorite","travel_explore"]]
+};
+
+/* ================= helpers ================= */
+const $ = id => document.getElementById(id);
+const ls = {get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}, set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+function toast(msg,ms=2400){const t=$("toast");t.textContent=msg;t.hidden=false;clearTimeout(t._h);t._h=setTimeout(()=>t.hidden=true,ms);}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function anyOpen(){return[...document.querySelectorAll(".sheet,.modal")].some(s=>!s.hidden);}
+function openSheet(id){$(id).hidden=false;$(id).scrollTop=0;document.body.style.overflow="hidden";}
+function closeSheet(id){$(id).hidden=true;if(!anyOpen())document.body.style.overflow="";if(id==="video")stopVideo();}
+document.addEventListener("click",e=>{
+  const c=e.target.closest("[data-close]");if(c)closeSheet(c.dataset.close);
+  const m=e.target.closest("[data-close-modal]");if(m)closeSheet(m.dataset.closeModal);
+  if(e.target.classList&&e.target.classList.contains("modal"))closeSheet(e.target.id);
+});
+let downloads=null;
+(async()=>{try{if(window.claude&&claude.use)downloads=await claude.use("downloads");}catch(e){}})();
+const UA=navigator.userAgent,isKakao=/KAKAOTALK/i.test(UA),isIOS=/iPhone|iPad|iPod/.test(UA)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1),isAndroid=/Android/i.test(UA);
+function afterSaveHint(kind,r){
+  if(r==="shared")return`공유창에서 '${kind==="영상"?"비디오":"이미지"} 저장'을 골랐다면 사진 앨범에 들어가 있어요.`;
+  if(SITE_MODE&&isIOS)return`저장했어요. '파일' 앱 → '다운로드'에서 ${kind}을 열고 공유 → '${kind==="영상"?"비디오":"이미지"} 저장'을 눌러 주세요.`;
+  if(isIOS)return`저장했어요. 아이폰은 '파일' 앱 → '다운로드' 폴더에 있어요. ${kind}을 열고 공유 버튼 → '${kind==="영상"?"비디오":"이미지"} 저장'을 누르면 사진 앨범에 들어가요.`;
+  if(isAndroid)return`저장했어요. 갤러리 앱의 'Download' 앨범(또는 내 파일 → 다운로드)에서 볼 수 있어요.`;
+  return"저장했어요. 다운로드 폴더를 확인해 주세요.";}
+function noSaveHint(kind){
+  if(isKakao)return"카카오톡 안에서는 저장이 안 돼요. 오른쪽 위 ⋮ 또는 공유 버튼 → '다른 브라우저로 열기'로 연 뒤 다시 눌러 주세요.";
+  if(isAndroid)return`${kind} 오른쪽 아래 ⋮ → '다운로드'를 누르면 저장돼요.`;
+  if(isIOS)return`이 화면에서는 바로 저장이 안 돼요. 사파리에서 링크를 열어 다시 해 보시거나, 아래 ${kind}을 재생하면서 화면 녹화로 남겨 주세요.`;
+  return`아래 ${kind}에서 저장해 주세요.`;}
+const SITE_MODE=true;
+async function saveFile(name,blob){
+  if(SITE_MODE){
+    const type=blob.type||(/\.mp4$/.test(name)?"video/mp4":/\.webm$/.test(name)?"video/webm":"image/jpeg");
+    const file=new File([blob],name,{type:type.split(";")[0]});
+    if(isIOS&&navigator.canShare&&navigator.canShare({files:[file]})){
+      try{await navigator.share({files:[file]});return"shared";}catch(e){if(e&&e.name==="AbortError")return"declined";}}
+    try{const u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000);return"saved";}catch(e){return false;}
+  }
+  if(!downloads)return false;try{await downloads.save({filename:name,data:blob});return"saved";}catch(e){if(e&&e.code==="declined")return"declined";return false;}}
+
+const store=(()=>{let mem=[],dbp=null;
+  function open(){if(!dbp)dbp=new Promise((res,rej)=>{try{const r=indexedDB.open("shin-daejeon",1);r.onupgradeneeded=()=>r.result.createObjectStore("posters",{keyPath:"id"});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);}catch(e){rej(e)}});return dbp;}
+  function run(mode,fn){return open().then(db=>new Promise((res,rej)=>{const t=db.transaction("posters",mode);const q=fn(t.objectStore("posters"));t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error);}));}
+  return{async all(){try{return(await run("readonly",s=>s.getAll())).sort((a,b)=>a.created-b.created)}catch(e){return mem.slice()}},
+    async put(v){mem=mem.filter(m=>m.id!==v.id).concat(v);try{await run("readwrite",s=>s.put(v))}catch(e){}},
+    async del(id){mem=mem.filter(m=>m.id!==id);try{await run("readwrite",s=>s.delete(id))}catch(e){}}};})();
+
+/* course state */
+let customs=ls.get("customs",[]);
+const ALL=()=>[...PLACES,...customs,FIXED.wine,FIXED.bday,FIXED.bye];
+const byId=id=>ALL().find(p=>p.id===id);
+let course=ls.get("course2",null);
+if(!course){course={sat:[],night:[],sun:ls.get("course",[])};}
+for(const k of Object.keys(SLOTS)){course[k]=(course[k]||[]).filter(id=>byId(id));}
+const saveCourse=()=>{ls.set("course2",course);ls.set("customs",customs);};
+const inCourse=id=>Object.keys(SLOTS).find(k=>course[k].includes(id));
+
+/* ================= intro ================= */
+const intro=$("intro"),reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+$("openBtn").addEventListener("click",()=>intro.classList.add("opening"));
+$("goBtn").addEventListener("click",()=>{intro.classList.add("leaving");setTimeout(()=>{intro.hidden=true;intro.classList.remove("leaving")},reduced?20:600);});
+$("replay").addEventListener("click",()=>{intro.hidden=false;intro.classList.remove("opening","leaving");intro.querySelectorAll(".marquee > *").forEach(el=>{el.style.animation="none";void el.offsetWidth;el.style.animation="";});});
+
+/* ================= tabs ================= */
+const TABS=["about","places","course","records"];
+function showTab(name,scroll){
+  if(!TABS.includes(name))name="about";
+  TABS.forEach(t=>{$(t).hidden=t!==name;$("tab-"+t).setAttribute("aria-selected",t===name);$("tab-"+t).tabIndex=t===name?0:-1;});
+  if(scroll){const top=document.querySelector(".tabs").getBoundingClientRect().top+scrollY;if(scrollY>top)scrollTo(0,top);}
+}
+function goTab(name){if(location.hash!=="#"+name)location.hash=name;else showTab(name,true);}
+document.querySelector(".tabs").addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(b)goTab(b.dataset.tab);});
+document.querySelector(".tabs").addEventListener("keydown",e=>{if(!["ArrowLeft","ArrowRight"].includes(e.key))return;const i=TABS.indexOf(document.activeElement.dataset.tab);if(i<0)return;const n=TABS[(i+(e.key==="ArrowRight"?1:3))%4];goTab(n);$("tab-"+n).focus();});
+document.addEventListener("click",e=>{const g=e.target.closest("[data-goto]");if(g)goTab(g.dataset.goto);});
+addEventListener("hashchange",()=>showTab(location.hash.slice(1),true));
+showTab(location.hash.slice(1),false);
+
+/* ================= places ================= */
+let cat="all",pendingPlace=null;
+function tagHtml(t){if(t==="dad")return'<span class="tag dad">아버님 취향</span>';if(t==="mom")return'<span class="tag mom">어머님 취향</span>';return`<span class="tag">${esc(t)}</span>`;}
+$("chips").innerHTML=CATS.map(([k,l])=>`<button class="chip" type="button" data-cat="${k}" aria-pressed="${k===cat}">${l}</button>`).join("");
+$("chips").addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;cat=b.dataset.cat;$("chips").querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.cat===cat));drawPlaces();});
+let pendingCustom=null;
+const norm=s=>s.replace(/\s/g,"").toLowerCase();
+$("placeQ").addEventListener("input",drawPlaces);
+$("searchBox").addEventListener("click",e=>{const b=e.target.closest("[data-addq]");if(!b)return;
+  pendingPlace=null;pendingCustom=$("placeQ").value.trim();if(!pendingCustom)return;
+  $("whenSub").textContent=pendingCustom;$("whenModal").hidden=false;document.body.style.overflow="hidden";});
+function drawPlaces(){
+  const q=$("placeQ").value.trim(),nq=norm(q);
+  const list=PLACES.filter(p=>(cat==="all"||p.cat===cat)&&(!nq||norm(p.name+p.short+p.kw+p.area+p.desc).includes(nq)));
+  const box=$("searchBox");box.hidden=!q;
+  if(q)box.innerHTML=`<b>'${esc(q)}'</b><p>${list.length?"아래 추천 명소 말고 다른 곳을 찾으시면":"추천 명소에는 없어요."} 네이버지도에서 찾아보고 코스에 담을 수 있어요.</p>
+    <div class="row"><a class="btn naver" href="https://map.naver.com/p/search/${encodeURIComponent(q)}" target="_blank" rel="noopener"><span class="ms" aria-hidden="true">search</span>네이버지도에서 찾기</a>
+    <button class="btn" type="button" data-addq="1"><span class="ms" aria-hidden="true">add</span>코스에 담기</button></div>`;
+  $("placeList").innerHTML=list.map(p=>{const s=inCourse(p.id);return`
+  <li class="place"><div class="tile" aria-hidden="true"><span>${p.emoji}</span></div>
+   <div><div class="area">${esc(p.area)}</div><h4>${esc(p.name)}</h4><p>${esc(p.desc)}</p>${p.note?`<div class="pnote"><span class="ms" aria-hidden="true">schedule</span>${esc(p.note)}</div>`:""}<div class="tags">${p.tags.map(tagHtml).join("")}</div></div>
+   <div class="acts"><button class="add" type="button" data-add="${p.id}" aria-pressed="${!!s}"><span class="ms" aria-hidden="true">${s?"check":"add"}</span>${s?"담았어요 · "+SLOTS[s].short:"코스에 담기"}</button>
+   <a class="mapbtn" href="https://map.naver.com/p/search/${encodeURIComponent("대전 "+p.name.replace(/\s*\(.*\)/,""))}" target="_blank" rel="noopener" aria-label="${esc(p.name)} 네이버지도에서 보기"><span class="ms" aria-hidden="true">location_on</span></a></div></li>`}).join("");
+  $("placeCount").textContent=list.length+"곳";
+}
+$("placeList").addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(!b)return;const id=b.dataset.add,s=inCourse(id);
+  if(s){course[s]=course[s].filter(x=>x!==id);saveCourse();drawPlaces();drawCourse();toast(`${byId(id).short}, 코스에서 뺐어요`);return;}
+  pendingPlace=id;pendingCustom=null;$("whenSub").textContent=byId(id).name;$("whenModal").hidden=false;document.body.style.overflow="hidden";});
+$("whenModal").addEventListener("click",e=>{const b=e.target.closest("[data-slot]");if(!b)return;
+  if(pendingCustom){const q=pendingCustom;const c={id:"c"+Date.now(),emoji:"📍",name:q,short:q.slice(0,14),area:"직접 추가",icon:/집|낮잠|휴식|쉬/.test(q)?"home":"travel",custom:true};customs.push(c);pendingPlace=c.id;pendingCustom=null;$("placeQ").value="";}
+  if(!pendingPlace)return;
+  course[b.dataset.slot].push(pendingPlace);saveCourse();closeSheet("whenModal");drawPlaces();drawCourse();toast(`${byId(pendingPlace).short}, ${SLOTS[b.dataset.slot].short}에 담았어요`);pendingPlace=null;});
+
+/* ================= course ================= */
+function tlItem(p,slot){const fixed=!slot;return`<li class="${fixed?"fixed":""}"><div class="em" aria-hidden="true">${p.emoji}</div><div><b>${esc(p.name)}</b><span>${esc(p.sub||p.area||"")}</span></div>
+  <div class="mini"><button class="icon-btn" type="button" data-poster="${p.id}" aria-label="${esc(p.short)} 포스터 만들기"><span class="ms">add_a_photo</span></button>${fixed?"":`<button class="icon-btn" type="button" data-move="${p.id}" data-from="${slot}" aria-label="${esc(p.name)} 다른 시간으로 옮기기"><span class="ms">swap_vert</span></button><button class="icon-btn" type="button" data-remove="${p.id}" data-from="${slot}" aria-label="${esc(p.name)} 코스에서 빼기"><span class="ms">close</span></button>`}</div></li>`;}
+function slotHtml(k){return`<div class="day">${SLOTS[k].label}</div>${course[k].length?`<ul class="tl">${course[k].map(id=>tlItem(byId(id),k)).join("")}</ul>`:""}<button class="slot-add" type="button" data-slotadd="${k}"><span class="ms" aria-hidden="true">add</span>여기에 추가</button>`;}
+function drawCourse(){
+  $("courseBody").innerHTML=slotHtml("sat")+`<ul class="tl">${tlItem(FIXED.wine)}</ul>`+slotHtml("night")+slotHtml("sun")+
+    `<div class="day">11.22 일 · 저녁</div><ul class="tl">${tlItem(FIXED.bday)}${tlItem(FIXED.bye)}</ul>`;
+}
+const ORDER=["sat","night","sun"];
+$("courseBody").addEventListener("click",e=>{
+  const r=e.target.closest("[data-remove]");if(r){course[r.dataset.from]=course[r.dataset.from].filter(x=>x!==r.dataset.remove);saveCourse();drawCourse();drawPlaces();return;}
+  const m=e.target.closest("[data-move]");if(m){const from=m.dataset.from,to=ORDER[(ORDER.indexOf(from)+1)%3];course[from]=course[from].filter(x=>x!==m.dataset.move);course[to].push(m.dataset.move);saveCourse();drawCourse();drawPlaces();toast(`${SLOTS[to].short}(으)로 옮겼어요`);return;}
+  const p=e.target.closest("[data-poster]");if(p){openMaker(byId(p.dataset.poster));return;}
+  const a=e.target.closest("[data-slotadd]");if(a)openAdd(a.dataset.slotadd);
+});
+let addSlot=null;
+function openAdd(k){addSlot=k;$("addTitle").textContent="코스에 추가";$("addSub").textContent=SLOTS[k].short;$("addQ").value="";$("addErr").hidden=true;drawAddSugs();$("addModal").hidden=false;document.body.style.overflow="hidden";}
+function matchPlaces(q){q=q.replace(/\s/g,"").toLowerCase();return[...PLACES,...customs].filter(p=>(p.name+p.short+(p.kw||"")+(p.area||"")).replace(/\s/g,"").toLowerCase().includes(q));}
+function drawAddSugs(){const q=$("addQ").value.trim();const list=(q?matchPlaces(q):PLACES).filter(p=>!inCourse(p.id)).slice(0,q?8:6);
+  $("addSugs").innerHTML=list.map(p=>`<button class="sug" type="button" data-pick="${p.id}">${p.emoji} ${esc(p.short)}</button>`).join("");
+  $("addCustomLabel").textContent=q?`'${q}' 직접 추가`:"직접 입력한 이름으로 추가";}
+$("addQ").addEventListener("input",()=>{$("addErr").hidden=true;drawAddSugs();});
+$("addSugs").addEventListener("click",e=>{const b=e.target.closest("[data-pick]");if(!b)return;course[addSlot].push(b.dataset.pick);saveCourse();closeSheet("addModal");drawCourse();drawPlaces();toast(`${byId(b.dataset.pick).short}, 추가했어요`);});
+$("addCustom").addEventListener("click",()=>{const q=$("addQ").value.trim();if(!q){$("addErr").textContent="추가할 이름을 입력해 주세요.";$("addErr").hidden=false;$("addQ").focus();return;}
+  const c={id:"c"+Date.now(),emoji:"📍",name:q,short:q.slice(0,14),area:"직접 추가",icon:/집|낮잠|휴식|쉬/.test(q)?"home":"travel",custom:true};
+  customs.push(c);course[addSlot].push(c.id);saveCourse();closeSheet("addModal");drawCourse();toast(`${q}, 추가했어요`);});
+
+/* ================= poster drawing ================= */
+const INK="#1F4D2E",PAPER="#FBF6EE";
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function cover(c,img,x,y,w,h){const s=Math.max(w/img.width,h/img.height),iw=img.width*s,ih=img.height*s;c.drawImage(img,x+(w-iw)/2,y+(h-ih)/2,iw,ih);}
+function dateStr(d=new Date()){return`${d.getFullYear()}.${d.getMonth()+1}.${d.getDate()} (${"일월화수목금토"[d.getDay()]})`;}
+function wrapTitle(c,t,fs,maxW){c.font=`${fs}px "Black Han Sans", sans-serif`;const words=t.trim().split(/\s+/),lines=[];let cur="";for(const w of words){const test=cur?cur+" "+w:w;if(c.measureText(test).width>maxW&&cur){lines.push(cur);cur=w}else cur=test}if(cur)lines.push(cur);return lines;}
+function makeCard(rec,img,k){
+  const cv=document.createElement("canvas"),c=cv.getContext("2d");
+  const cw=780*k,pad=46*k,inner=cw-pad*2,ph=560*k;
+  const title=(rec.title||"").trim()||"대전";
+  let fs=168*k,lines;for(;fs>=60*k;fs-=4*k){lines=wrapTitle(c,title,fs,inner);if(lines.length<=2&&lines.every(l=>c.measureText(l).width<=inner))break;}
+  const lh=fs*1.05,ch=pad+ph+54*k+lines.length*lh+96*k+92*k+pad;
+  cv.width=Math.round(cw);cv.height=Math.round(ch);
+  rr(c,0,0,cw,ch,22*k);c.fillStyle=PAPER;c.fill();
+  c.save();rr(c,pad,pad,inner,ph,10*k);c.clip();
+  if(img)cover(c,img,pad,pad,inner,ph);else{c.fillStyle="#C9D3C4";c.fillRect(pad,pad,inner,ph);c.fillStyle="#3B5A45";c.textAlign="center";c.font=`${34*k}px "Gowun Dodum", sans-serif`;c.fillText("사진을 올려 주세요",cw/2,pad+ph/2+12*k);c.textAlign="left";}
+  c.restore();
+  c.fillStyle=INK;c.font=`${fs}px "Black Han Sans", sans-serif`;let ty=pad+ph+54*k+fs*.88;for(const l of lines){c.fillText(l,pad,ty);ty+=lh;}
+  const fy=ch-pad-52*k;let iconW=0;
+  if(document.fonts&&document.fonts.check(`${52*k}px "Material Symbols Outlined"`)){
+    const names=(ICONS[rec.icon]||ICONS.travel)[1];c.font=`${52*k}px "Material Symbols Outlined"`;c.textAlign="right";let x=cw-pad;
+    for(let i=names.length-1;i>=0;i--){c.fillText(names[i],x,fy+46*k);const w=c.measureText(names[i]).width+6*k;x-=w;iconW+=w;}c.textAlign="left";}
+  const maxTxt=inner-iconW-16*k;
+  const row=(label,val,y)=>{c.font=`600 ${28*k}px Inter, sans-serif`;c.fillText(label,pad,y);const lw=c.measureText(label+" ").width;c.font=`400 ${28*k}px Inter, "Gowun Dodum", sans-serif`;let v=val;if(c.measureText(v).width>maxTxt-lw){while(v.length&&c.measureText(v+"…").width>maxTxt-lw)v=v.slice(0,-1);v+="…";}c.fillText(v,pad+lw,y);};
+  row("DATE",rec.date||dateStr(),fy+8*k);row("WITH",(rec.with||"").trim()||"우리 가족",fy+48*k);
+  return cv;
+}
+function drawBg(c,W,H,img){if(img){cover(c,img,0,0,W,H);c.fillStyle="rgba(0,0,0,.34)";c.fillRect(0,0,W,H);}else{c.fillStyle="#2F4A3A";c.fillRect(0,0,W,H);}}
+function placeCard(c,card,W,H,angle=0,sway=0,scale=1){
+  c.save();c.translate(W/2,H/2);c.rotate(sway);const cs=Math.cos(angle);
+  c.transform(cs*scale,Math.sin(angle)*.16*scale,0,scale,0,0);
+  c.shadowColor="rgba(0,0,0,.32)";c.shadowBlur=W*.04;c.shadowOffsetY=W*.012;
+  c.drawImage(card,-card.width/2,-card.height/2);c.restore();
+}
+function posterCanvas(rec,img,W){const H=Math.round(W*16/9),cv=document.createElement("canvas");cv.width=W;cv.height=H;const c=cv.getContext("2d");drawBg(c,W,H,img);placeCard(c,makeCard(rec,img,W/1080),W,H);return cv;}
+function loadImg(src){return new Promise((res,rej)=>{if(!src)return res(null);const u=typeof src==="string"?src:URL.createObjectURL(src),i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=u;});}
+function toBlob(cv,type="image/jpeg",q=.88){return new Promise(r=>cv.toBlob(r,type,q));}
+
+/* ================= poster maker ================= */
+const iconSel=$("iconset");iconSel.innerHTML=Object.entries(ICONS).map(([k,[l]])=>`<option value="${k}">${l}</option>`).join("");
+let mk={photo:null,img:null};
+function makerSugs(q){q=q.replace(/\s/g,"").toLowerCase();
+  if(!q){const base=[...course.sat,...course.night,...course.sun].map(byId).concat([FIXED.wine,FIXED.bday,FIXED.bye]);return base;}
+  return ALL().filter(p=>(p.name+p.short+(p.kw||"")+(p.area||"")).replace(/\s/g,"").toLowerCase().includes(q)).slice(0,6);}
+function drawSugs(){const q=$("title").value;$("sugs").innerHTML=makerSugs(q).map(p=>`<button class="sug${p.short===q?" on":""}" type="button" data-sug="${p.id}">${p.emoji} ${esc(p.short)}</button>`).join("");}
+$("sugs").addEventListener("click",e=>{const b=e.target.closest("[data-sug]");if(!b)return;const p=byId(b.dataset.sug);$("title").value=p.short;iconSel.value=p.icon;drawSugs();renderPreview();});
+let rq=0;function renderPreview(){cancelAnimationFrame(rq);rq=requestAnimationFrame(()=>{const rec={title:$("title").value,with:$("with").value,icon:iconSel.value,date:dateStr()};$("preview").src=posterCanvas(rec,mk.img,720).toDataURL("image/jpeg",.85);});}
+$("title").addEventListener("input",()=>{const m=ALL().find(p=>p.short===$("title").value.trim());if(m)iconSel.value=m.icon;$("makerErr").hidden=true;drawSugs();renderPreview();});
+["with","iconset"].forEach(id=>$(id).addEventListener("input",renderPreview));
+$("photo").addEventListener("change",async e=>{const f=e.target.files[0];if(!f)return;
+  try{const raw=await loadImg(f);const s=Math.min(1,1600/Math.max(raw.width,raw.height));const cv=document.createElement("canvas");cv.width=Math.round(raw.width*s);cv.height=Math.round(raw.height*s);cv.getContext("2d").drawImage(raw,0,0,cv.width,cv.height);
+    mk.photo=await toBlob(cv,"image/jpeg",.86);mk.img=await loadImg(mk.photo);$("photoLabel").textContent="사진 바꾸기";$("makerErr").hidden=true;renderPreview();}
+  catch(err){toast("사진을 불러오지 못했어요. 다른 사진으로 해 보세요.");}});
+function openMaker(p){
+  mk={photo:null,img:null};$("photo").value="";$("photoLabel").textContent="사진 찍기 / 고르기";$("makerErr").hidden=true;
+  $("title").value=p?p.short:"";iconSel.value=p?p.icon:"travel";$("with").value=ls.get("with","장인어른 · 장모님");
+  drawSugs();openSheet("maker");renderPreview();}
+$("newPoster").addEventListener("click",()=>openMaker(null));
+$("savePoster").addEventListener("click",async()=>{const err=$("makerErr");
+  if(!mk.photo){err.textContent="사진을 먼저 올려 주세요.";err.hidden=false;return;}
+  if(!$("title").value.trim()){err.textContent="어디인지 입력해 주세요.";err.hidden=false;$("title").focus();return;}
+  ls.set("with",$("with").value);
+  await store.put({id:"p"+Date.now(),created:Date.now(),title:$("title").value.trim(),with:$("with").value.trim(),icon:iconSel.value,date:dateStr(),photo:mk.photo});
+  closeSheet("maker");await drawAlbum();goTab("records");toast("우리의 포스터에 담았어요");});
+
+/* ================= album + viewer ================= */
+let posters=[],thumbs=[];
+async function drawAlbum(){
+  posters=await store.all();
+  const html=[],urls=[];for(const r of posters){const img=await loadImg(r.photo).catch(()=>null);const b=await toBlob(posterCanvas(r,img,360),"image/jpeg",.8);const u=URL.createObjectURL(b);urls.push(u);html.push(`<button type="button" data-view="${r.id}"><img src="${u}" alt="${esc(r.title)} 포스터"></button>`);}
+  thumbs.forEach(u=>URL.revokeObjectURL(u));thumbs=urls;
+  $("pCount").textContent=posters.length+"장";$("album").hidden=!posters.length;$("empty").hidden=!!posters.length;$("album").innerHTML=html.join("");}
+let viewing=null,viewBlob=null,delArmed=false;
+$("album").addEventListener("click",async e=>{const b=e.target.closest("[data-view]");if(!b)return;viewing=posters.find(p=>p.id===b.dataset.view);if(!viewing)return;
+  delArmed=false;$("vDelLabel").textContent="지우기";$("vTitle").textContent=viewing.title;
+  const img=await loadImg(viewing.photo).catch(()=>null);viewBlob=await toBlob(posterCanvas(viewing,img,1080),"image/jpeg",.92);
+  const old=$("vImg").src;$("vImg").src=URL.createObjectURL(viewBlob);if(old.startsWith("blob:"))URL.revokeObjectURL(old);$("vImg").alt=viewing.title+" 포스터";
+  $("vHint").hidden=!!downloads;openSheet("viewer");});
+$("vSave").addEventListener("click",async()=>{if(!viewBlob)return;const r=await saveFile(`신가네-대전-${viewing.title}.jpg`,viewBlob);
+  if(r==="saved"||r==="shared"){$("vHint").textContent=afterSaveHint("사진",r);$("vHint").hidden=false;toast("포스터를 저장했어요");}
+  else if(!r){$("vHint").textContent=isKakao?noSaveHint("사진"):"포스터를 꾹 눌러서 '사진 앱에 저장'(또는 '이미지 다운로드')을 눌러 주세요.";$("vHint").hidden=false;}});
+let lastVideo=null;
+$("resave").addEventListener("click",async()=>{if(!lastVideo)return;const r=await saveFile(`신가네-대전여행.${lastVideo.ext}`,lastVideo.blob);
+  if(r==="saved"||r==="shared"){$("recHint").textContent=afterSaveHint("영상",r);if(r==="saved")toast("영상을 저장했어요");}else if(!r){$("vOut").hidden=false;$("recHint").textContent=noSaveHint("영상");}});
+if(isKakao)document.querySelectorAll("[data-kakao]").forEach(el=>el.hidden=false);
+$("vDel").addEventListener("click",async()=>{if(!delArmed){delArmed=true;$("vDelLabel").textContent="한 번 더 누르면 지워져요";return;}await store.del(viewing.id);closeSheet("viewer");await drawAlbum();toast("포스터를 지웠어요");});
+
+/* ================= video ================= */
+const VW=720,VH=1280,HOLD=1.6,TR=.8,SEG=HOLD+TR;
+const vc=$("vCanvas"),vx=vc.getContext("2d");
+let slides=[],raf=0,t0=0,recording=null,recTimer=0;
+function ease(p){return p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;}
+function totalDur(){return slides.length*SEG-TR+.6;}
+function frame(t){
+  const n=slides.length;let i=Math.min(Math.floor(t/SEG),n-1);const local=t-i*SEG,sway=Math.sin(t*1.3)*.035;
+  if(local<HOLD||i===n-1){vx.drawImage(slides[i].bg,0,0);const pop=t<.5?.9+.1*ease(t/.5):1;placeCard(vx,slides[i].card,VW,VH,0,sway,pop);return;}
+  const p=ease((local-HOLD)/TR);
+  vx.drawImage(slides[i].bg,0,0);vx.globalAlpha=p;vx.drawImage(slides[i+1].bg,0,0);vx.globalAlpha=1;
+  if(p<.5)placeCard(vx,slides[i].card,VW,VH,p*Math.PI,sway);else placeCard(vx,slides[i+1].card,VW,VH,-(1-p)*Math.PI,sway);
+}
+/* ---- background music: 10 original tracks synthesized in the browser (no recordings, no third-party music) ---- */
+let actx=null,music=null,musicOn=true,cycle=-1,noiseBuf=null,revBuf=null,songId=ls.get("song","citypop");
+const Q={"":[0,4,7],m:[0,3,7],maj:[0,4,7],min:[0,3,7],maj7:[0,4,7,11],m7:[0,3,7,10],dom7:[0,4,7,10],add9:[0,4,7,14],m9:[0,3,7,10,14],sus2:[0,2,7],maj9:[0,4,7,11,14]};
+const NOTE={C:0,Db:1,D:2,Eb:3,E:4,F:5,Gb:6,G:7,Ab:8,A:9,Bb:10,B:11};
+const ch=s=>{const m=s.match(/^([A-G]b?)(.*)$/);return{root:NOTE[m[1]],q:Q[m[2]]||Q.maj};};
+const SONGS=[
+  {id:"citypop",name:"겨울 시티팝",mood:"세련된 드라이브",bpm:112,swing:0,beats:4,rev:.25,chords:["Fmaj7","Em7","Dm7","Cmaj9"].map(ch),
+   kick:"x.....x...x.....",snare:"....x.......x...",hat:"x.x.x.x.x.x.x.x.",bass:"1..1.8..1..5.3..",bassType:"slap",comp:"..x...x...x..x..",compInst:"ep",lead:"2--.1.0--...3-2.",leadInst:"pluck"},
+  {id:"lofi",name:"로파이 카페",mood:"느긋한 커피 한잔",bpm:78,swing:.22,beats:4,rev:.35,crackle:true,chords:["Dm9","Gdom7","Cmaj7","Am7"].map(ch),
+   kick:"x......x..x.....",snare:"....x.......x...",hat:"..x...x...x...x.",bass:"1.......5...3...",bassType:"soft",comp:"L...............",compInst:"ep",lead:"....3-2-....1---",leadInst:"ep"},
+  {id:"house",name:"스노우 하우스",mood:"신나는 겨울밤",bpm:122,swing:0,beats:4,rev:.3,chords:["Am7","Fmaj7","Cmaj7","Gadd9"].map(ch),
+   kick:"x...x...x...x...",clap:"....x.......x...",ohat:"..x...x...x...x.",hat:"x.x.x.x.x.x.x.x.",bass:"..1...1...1...1.",bassType:"sub",pad:true,arp:"0123a3210123a321",arpInst:"pluck"},
+  {id:"pop",name:"반짝 겨울 팝",mood:"밝고 경쾌하게",gain:1.2,bpm:118,swing:0,beats:4,rev:.3,chords:["C","G","Am","F"].map(ch),
+   kick:"x.......x.......",clap:"....x.......x...",hat:"x.xxx.x.x.xxx.x.",bass:"1.1.1.1.1.1.5.5.",bassType:"pluck",comp:"x..x..x...x..x..",compInst:"pluck",lead:"2-1-0---2-3-4---",leadInst:"bell"},
+  {id:"acoustic",name:"어쿠스틱 산책",mood:"포근한 오후",gain:1.3,bpm:96,swing:.08,beats:4,rev:.3,chords:["Gadd9","Dsus2","Em7","Cmaj7"].map(ch),
+   kick:"x.......x.......",hat:"..x...x...x...x.",rim:"....x.......x...",bass:"1.......5.......",bassType:"soft",arp:"0.1.2.3.a.3.2.1.",arpInst:"guitar"},
+  {id:"synthwave",name:"야경 신스웨이브",mood:"반짝이는 밤 드라이브",bpm:100,swing:0,beats:4,rev:.45,chords:["Am","F","C","G"].map(ch),
+   kick:"x...x...x...x...",snare:"....x.......x...",hat:"x.x.x.x.x.x.x.x.",bass:"1.1.1.1.1.1.1.1.",bassType:"saw",pad:true,arp:"0a1a2a0a1a2a0a1a",arpInst:"saw"},
+  {id:"jazz",name:"와인바 재즈",mood:"오늘 밤 홈 와인바",bpm:92,swing:.3,beats:4,rev:.3,chords:["Dm7","Gdom7","Cmaj7","Am7"].map(ch),
+   brush:true,hat:"x..x..x..x..x..x",kick:"x...............",bass:"1...3...5...6...",bassType:"upright",comp:"...x......x.....",compInst:"ep",lead:"3-2-1-0-....2---",leadInst:"ep"},
+  {id:"musicbox",name:"오르골 겨울밤",mood:"잔잔하고 따뜻하게",gain:2.4,bpm:90,swing:0,beats:3,rev:.5,chords:["C","Am","F","G"].map(ch),
+   bass:"1...........",bassType:"soft",pad:true,arp:"0.1.2.a.2.1.",arpInst:"box"},
+  {id:"future",name:"퓨처 베이스 축제",mood:"두근두근 하이라이트",bpm:75,swing:0,beats:4,rev:.35,chords:["Fmaj7","G","Em7","Am7"].map(ch),
+   kick:"x.........x.....",snare:"........x.......",hat:"xxxxxxxxxxxxxxxx",bass:"1.........1.....",bassType:"sub",comp:"x..x..x.x..x.x..",compInst:"supersaw",lead:"a-3-2-....1-2-3-",leadInst:"bell"},
+  {id:"jingle",name:"징글벨 (클래식)",mood:"모두가 아는 그 노래",bpm:150,swing:0,beats:4,rev:.2,jingle:true}
+];
+const songById=id=>SONGS.find(s=>s.id===id)||SONGS[0];
+function ensureAudio(){try{if(!actx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;actx=new AC();}if(actx.state==="suspended")actx.resume();return actx;}catch(e){return null;}}
+const mtof=m=>440*Math.pow(2,(m-69)/12);
+function noise(){if(!noiseBuf){noiseBuf=actx.createBuffer(1,Math.floor(actx.sampleRate*1),actx.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}return noiseBuf;}
+function reverbBuf(){if(!revBuf){const L=Math.floor(actx.sampleRate*2.2);revBuf=actx.createBuffer(2,L,actx.sampleRate);for(let c=0;c<2;c++){const d=revBuf.getChannelData(c);for(let i=0;i<L;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/L,3.2);}}return revBuf;}
+function env(g,t,a,peak,dec,sus,len){g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(peak,t+a);if(sus){g.gain.setTargetAtTime(peak*sus,t+a,dec);g.gain.setTargetAtTime(.0001,t+len,.08);}else g.gain.exponentialRampToValueAtTime(.0001,t+a+dec);}
+function osc(type,f,t,stop,dest,detune=0){const o=actx.createOscillator();o.type=type;o.frequency.value=f;o.detune.value=detune;o.connect(dest);o.start(t);o.stop(stop);return o;}
+function noiseHit(t,dest,type,freq,q,vol,dec){const s=actx.createBufferSource();s.buffer=noise();const f=actx.createBiquadFilter();f.type=type;f.frequency.value=freq;f.Q.value=q;const g=actx.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+dec);s.connect(f);f.connect(g);g.connect(dest);s.start(t,Math.random()*.5);s.stop(t+dec+.05);}
+const DR={
+  kick(t,d,v=1){const o=actx.createOscillator(),g=actx.createGain();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(42,t+.13);g.gain.setValueAtTime(.9*v,t);g.gain.exponentialRampToValueAtTime(.0001,t+.38);o.connect(g);g.connect(d);o.start(t);o.stop(t+.4);},
+  snare(t,d,v=1){noiseHit(t,d,"bandpass",1900,.8,.45*v,.17);const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=190;g.gain.setValueAtTime(.25*v,t);g.gain.exponentialRampToValueAtTime(.0001,t+.09);o.connect(g);g.connect(d);o.start(t);o.stop(t+.1);},
+  clap(t,d,v=1){for(let i=0;i<3;i++)noiseHit(t+i*.011,d,"bandpass",1500,1.2,.35*v,.05+(i===2?.12:0));},
+  rim(t,d,v=1){noiseHit(t,d,"bandpass",3200,4,.25*v,.04);},
+  hat(t,d,v=1){noiseHit(t,d,"highpass",8500,.7,.13*v,.045);},
+  ohat(t,d,v=1){noiseHit(t,d,"highpass",7500,.7,.12*v,.22);},
+  brush(t,d,v=1){noiseHit(t,d,"bandpass",5000,.5,.06*v,.16);}
+};
+const INST={
+  ep(f,t,len,d,v=1){const c=actx.createOscillator(),m=actx.createOscillator(),mg=actx.createGain(),g=actx.createGain();c.frequency.value=f;m.frequency.value=f;mg.gain.setValueAtTime(f*1.6,t);mg.gain.exponentialRampToValueAtTime(f*.08,t+.6);m.connect(mg);mg.connect(c.frequency);c.connect(g);g.connect(d);env(g,t,.008,.16*v,.35,.35,len);c.start(t);m.start(t);c.stop(t+len+.5);m.stop(t+len+.5);},
+  pluck(f,t,len,d,v=1){const g=actx.createGain(),lp=actx.createBiquadFilter();lp.type="lowpass";lp.frequency.setValueAtTime(f*8,t);lp.frequency.exponentialRampToValueAtTime(f*1.2,t+.25);lp.connect(g);g.connect(d);osc("sawtooth",f,t,t+len+.4,lp,-6);osc("square",f,t,t+len+.4,lp,6);env(g,t,.004,.08*v,.28,0,len);},
+  guitar(f,t,len,d,v=1){const g=actx.createGain(),lp=actx.createBiquadFilter();lp.type="lowpass";lp.frequency.setValueAtTime(f*6,t);lp.frequency.exponentialRampToValueAtTime(f*1.5,t+.4);lp.connect(g);g.connect(d);osc("triangle",f,t,t+1.4,lp);osc("sawtooth",f*2,t,t+1.4,lp);env(g,t,.003,.1*v,.9,0,len);},
+  saw(f,t,len,d,v=1){const g=actx.createGain(),lp=actx.createBiquadFilter();lp.type="lowpass";lp.frequency.setValueAtTime(2600,t);lp.frequency.exponentialRampToValueAtTime(700,t+.18);lp.connect(g);g.connect(d);osc("sawtooth",f,t,t+len+.3,lp,-8);osc("sawtooth",f,t,t+len+.3,lp,8);env(g,t,.005,.06*v,.16,0,len);},
+  supersaw(f,t,len,d,v=1){const g=actx.createGain(),lp=actx.createBiquadFilter();lp.type="lowpass";lp.frequency.value=3200;lp.connect(g);g.connect(d);[-18,-7,0,7,18].forEach(dt=>osc("sawtooth",f,t,t+len+.2,lp,dt));env(g,t,.01,.035*v,.12,.6,len);},
+  bell(f,t,len,d,v=1){const g=actx.createGain();g.connect(d);osc("sine",f,t,t+1.6,g);const g2=actx.createGain();g2.gain.value=.25;g2.connect(g);osc("sine",f*3.01,t,t+1.6,g2);env(g,t,.003,.14*v,1.1,0,len);},
+  box(f,t,len,d,v=1){const g=actx.createGain();g.connect(d);osc("sine",f*2,t,t+2.2,g);const g2=actx.createGain();g2.gain.value=.18;g2.connect(g);osc("sine",f*2*2.76,t,t+2.2,g2);env(g,t,.002,.15*v,1.6,0,len);},
+  pad(f,t,len,d,v=1){const g=actx.createGain(),lp=actx.createBiquadFilter();lp.type="lowpass";lp.frequency.value=1300;lp.connect(g);g.connect(d);osc("sawtooth",f,t,t+len+1,lp,-10);osc("sawtooth",f,t,t+len+1,lp,10);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.03*v,t+.35);g.gain.setTargetAtTime(.0001,t+len,.3);}
+};
+const BASS={
+  slap(f,t,len,d){INST.pluck(f,t,len,d,2.6);},
+  soft(f,t,len,d){const g=actx.createGain();g.connect(d);osc("sine",f,t,t+len+.3,g);osc("triangle",f,t,t+len+.3,g);env(g,t,.01,.22,.4,.6,len);},
+  sub(f,t,len,d){const g=actx.createGain();g.connect(d);osc("sine",f,t,t+len+.2,g);env(g,t,.01,.38,.25,.7,len);},
+  pluck(f,t,len,d){INST.pluck(f,t,len,d,2.2);},
+  saw(f,t,len,d){INST.saw(f,t,len,d,2.6);},
+  upright(f,t,len,d){const g=actx.createGain(),lp=actx.createBiquadFilter();lp.type="lowpass";lp.frequency.value=600;lp.connect(g);g.connect(d);osc("triangle",f,t,t+len+.3,lp);osc("sine",f,t,t+len+.3,lp);env(g,t,.006,.32,.3,.4,len);}
+};
+function voicing(c,lo=55){return c.q.map(i=>{let m=60+c.root+i;while(m>=lo+14)m-=12;while(m<lo)m+=12;return m;}).sort((a,b)=>a-b);}
+function idxNote(vc,chr){const up="abcde".indexOf(chr);const i=up>=0?up:parseInt(chr,10);if(isNaN(i))return null;return vc[i%vc.length]+12*Math.floor(i/vc.length)+(up>=0?12:0);}
+function parseLine(str){const out=[];for(let i=0;i<str.length;i++){const c=str[i];if(c==="."||c==="-")continue;let len=1;while(str[i+len]==="-")len++;out.push([i,c,len]);}return out;}
+function scheduleSong(s,out,start,dur){
+  {const sg=actx.createGain();sg.gain.value=s.jingle?2.6:(s.gain||1);sg.connect(out);out=sg;}
+  if(s.jingle)return scheduleJingle(out,start,dur);
+  const steps=s.beats*4,sd=60/s.bpm/4,barLen=steps*sd,end=start+dur;
+  const dry=actx.createGain();dry.connect(out);
+  const rv=actx.createConvolver();rv.buffer=reverbBuf();const rg=actx.createGain();rg.gain.value=s.rev;rv.connect(rg);rg.connect(out);
+  const bus=actx.createGain();bus.connect(dry);bus.connect(rv);
+  const at=(bar,i)=>start+bar*barLen+i*sd+(i%2?s.swing*sd:0);
+  if(s.crackle){for(let t=start;t<end;t+=.13+Math.random()*.25)noiseHit(t,dry,"highpass",3000,.5,.03+Math.random()*.03,.01);}
+  for(let bar=0;start+bar*barLen<end;bar++){
+    const c=s.chords[bar%s.chords.length],vc=voicing(c),vcl=voicing(c,62);
+    for(const k of["kick","snare","clap","rim","hat","ohat"]){const p=s[k];if(!p)continue;for(let i=0;i<steps;i++)if(p[i]==="x"){const t=at(bar,i);if(t<end)DR[k](t,k==="kick"?dry:bus,k==="hat"?(i%4===0?1:.7):1);}}
+    if(s.brush)for(let i=0;i<steps;i+=2){const t=at(bar,i);if(t<end)DR.brush(t,bus,i%8===4?1.3:.8);}
+    if(s.bass){for(const[i,chr,len]of parseLine(s.bass)){const t=at(bar,i);if(t>=end)continue;const off={"1":0,"3":c.q[1],"5":7,"6":9,"8":12}[chr]||0;BASS[s.bassType](mtof(36+c.root+off),t,len*sd*.95,dry);}}
+    if(s.pad){vc.forEach(m=>INST.pad(mtof(m),at(bar,0),barLen*.98,bus));}
+    if(s.comp){for(const[i,chr]of parseLine(s.comp)){const t=at(bar,i);if(t>=end)continue;const L=chr==="L"?barLen*.95:sd*1.6;vc.forEach(m=>INST[s.compInst](mtof(m),t,L,bus,.8));}}
+    if(s.arp){for(const[i,chr,len]of parseLine(s.arp)){const t=at(bar,i);if(t>=end)continue;const m=idxNote(vcl,chr);if(m)INST[s.arpInst](mtof(m),t,len*sd,bus,.9);}}
+    if(s.lead){const line=bar%2?s.lead.split("").reverse().join("").replace(/^(-+)/,m=>".".repeat(m.length)):s.lead;
+      for(const[i,chr,len]of parseLine(line)){const t=at(bar,i);if(t>=end)continue;const m=idxNote(vcl,chr);if(m)INST[s.leadInst](mtof(m+12),t,len*sd,bus,1);}}
+  }
+}
+/* "Jingle Bells" (James Lord Pierpont, 1857, public domain) */
+const NT={C3:130.81,D3:146.83,E3:164.81,F3:174.61,G3:196,A3:220,B3:246.94,C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392,A4:440,B4:493.88,C5:523.25,D5:587.33,E5:659.25,F5:698.46,G5:783.99};
+const PHR_A=[["E5",1],["E5",1],["E5",2],["E5",1],["E5",1],["E5",2],["E5",1],["G5",1],["C5",1.5],["D5",.5],["E5",4]];
+const MEL=[...PHR_A,["F5",1],["F5",1],["F5",1.5],["F5",.5],["F5",1],["E5",1],["E5",1],["E5",.5],["E5",.5],["E5",1],["D5",1],["D5",1],["E5",1],["D5",2],["G5",2],
+  ...PHR_A,["F5",1],["F5",1],["F5",1.5],["F5",.5],["F5",1],["E5",1],["E5",1],["E5",.5],["E5",.5],["G5",1],["G5",1],["F5",1],["D5",1],["C5",4]];
+const CHD={C:{b:"C3",f:"G3",t:["C4","E4","G4"]},F:{b:"F3",f:"C4",t:["C4","F4","A4"]},G:{b:"G3",f:"D3",t:["D4","G4","B4"]}};
+const BARS=["C","C","C","C","F","C","G","G","C","C","C","C","F","C","G","C"];
+function tone(f,t,len,type,vol,out){const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+len);o.connect(g);g.connect(out);o.start(t);o.stop(t+len+.05);}
+function scheduleJingle(out,start,dur){const B=.4,end=start+dur,loopLen=64*B;
+  for(let base=start;base<end;base+=loopLen){
+    let t=base;for(const[n,b]of MEL){if(t>=end)break;const len=b*B;tone(NT[n],t,Math.max(.22,len*.92),"triangle",.2,out);tone(NT[n]*2,t,.35,"sine",.05,out);t+=len;}
+    for(let bar=0;bar<16;bar++){const bt=base+bar*4*B;if(bt>=end)break;const c=CHD[BARS[bar]];
+      tone(NT[c.b],bt,B*.9,"triangle",.26,out);tone(NT[c.f],bt+2*B,B*.9,"triangle",.22,out);
+      for(const k of[1,3])c.t.forEach(n=>tone(NT[n],bt+k*B,B*.35,"square",.022,out));
+      for(let e=0;e<8;e++)noiseHit(bt+e*B/2,out,"highpass",7000,.7,e%2?.045:.09,.09);}
+  }}
+function startMusic(dur,extra){if(!musicOn||!ensureAudio())return;stopMusic();
+  const g=actx.createGain(),comp=actx.createDynamicsCompressor(),t=actx.currentTime+.06;
+  comp.threshold.value=-18;comp.ratio.value=4;comp.attack.value=.005;comp.release.value=.2;g.connect(comp);comp.connect(actx.destination);if(extra)comp.connect(extra);
+  g.gain.setValueAtTime(.62,t);g.gain.setValueAtTime(.62,t+Math.max(0,dur-1.2));g.gain.linearRampToValueAtTime(.0001,t+dur);
+  scheduleSong(songById(songId),g,t,dur);music={g,comp};}
+function stopMusic(){if(music){try{music.comp.disconnect();music.g.disconnect();}catch(e){}music=null;}}
+function drawSongs(){$("songList").innerHTML=[...SONGS.map(s=>`<button class="song" type="button" data-song="${s.id}" aria-pressed="${musicOn&&s.id===songId}"><b>${esc(s.name)}</b><small>${esc(s.mood)}</small></button>`),
+  `<button class="song" type="button" data-song="off" aria-pressed="${!musicOn}"><b>음악 없이</b><small>조용하게</small></button>`].join("");}
+$("songList").addEventListener("click",e=>{const b=e.target.closest("[data-song]");if(!b||recording)return;
+  if(b.dataset.song==="off"){musicOn=false;stopMusic();}else{musicOn=true;songId=b.dataset.song;ls.set("song",songId);ensureAudio();t0=performance.now();cycle=-1;}
+  drawSongs();});
+drawSongs();
+function loop(now){const el=(now-t0)/1000,D=totalDur(),c=Math.floor(el/D);if(c!==cycle){cycle=c;startMusic(D);}frame(el%D);raf=requestAnimationFrame(loop);}
+function recTick(){const t=(performance.now()-t0)/1000,D=totalDur();
+  if(t>=D){clearInterval(recTimer);frame(D-.001);if(recording&&recording.state!=="inactive")recording.stop();return;}
+  $("recBar").firstElementChild.style.width=Math.min(100,t/D*100)+"%";frame(t);}
+function stopVideo(){stopMusic();cycle=-1;cancelAnimationFrame(raf);clearInterval(recTimer);if(recording&&recording.state!=="inactive"){recording._cancel=true;recording.stop();}recording=null;$("recBtn").disabled=false;$("recBar").hidden=true;}
+function bgCanvas(img){const cv=document.createElement("canvas");cv.width=VW;cv.height=VH;drawBg(cv.getContext("2d"),VW,VH,img);return cv;}
+$("makeVideo").addEventListener("click",async()=>{
+  if(musicOn)ensureAudio();
+  posters=await store.all();
+  if(posters.length<2){toast("포스터가 2장 이상 있어야 영상을 만들 수 있어요");return;}
+  const imgs=[];for(const r of posters)imgs.push(await loadImg(r.photo).catch(()=>null));
+  const fam=await loadImg("assets/family.webp").catch(()=>null);
+  const k=VW/1080,first=fam||imgs[0],last=fam||imgs[imgs.length-1];
+  slides=[{bg:bgCanvas(first),card:makeCard({title:"신가네 대전여행",with:"신정도 · 윤혜경 · 신나현",icon:"travel",date:posters[0].date},first,k)}];
+  posters.forEach((r,i)=>slides.push({bg:bgCanvas(imgs[i]),card:makeCard(r,imgs[i],k)}));
+  slides.push({bg:bgCanvas(last),card:makeCard({title:"또 놀러 오세요",with:"사랑하는 사위가",icon:"bye",date:posters[posters.length-1].date},last,k)});
+  $("vOut").hidden=true;$("recBar").hidden=true;$("recBtn").disabled=false;$("recHint").textContent="미리보기가 계속 반복돼요. 마음에 들면 저장하세요.";
+  openSheet("video");cancelAnimationFrame(raf);cycle=-1;t0=performance.now();raf=requestAnimationFrame(loop);
+});
+$("recBtn").addEventListener("click",()=>{
+  if(recording)return;
+  if(!vc.captureStream||typeof MediaRecorder==="undefined"){toast("이 휴대폰 브라우저는 영상 저장을 지원하지 않아요");return;}
+  stopMusic();$("resave").hidden=true;$("vOut").hidden=true;
+  const ac=musicOn?ensureAudio():null,dest=ac&&ac.createMediaStreamDestination?ac.createMediaStreamDestination():null;
+  const stream=vc.captureStream(30);if(dest)dest.stream.getAudioTracks().forEach(tr=>stream.addTrack(tr));
+  const types=dest?["video/mp4;codecs=avc1,mp4a.40.2","video/mp4","video/webm;codecs=vp9,opus","video/webm;codecs=vp8,opus","video/webm"]:["video/mp4;codecs=avc1","video/mp4","video/webm;codecs=vp9","video/webm"];
+  const mime=types.find(m=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(m));
+  let rec;try{rec=new MediaRecorder(stream,mime?{mimeType:mime,videoBitsPerSecond:4000000,audioBitsPerSecond:128000}:{});}catch(e){toast("영상을 만들 수 없어요");return;}
+  rec._dest=dest;
+  const chunks=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
+  rec.onstop=async()=>{
+    if(rec._cancel)return;recording=null;
+    const type=rec.mimeType||mime||"video/webm",ext=type.includes("mp4")?"mp4":"webm",blob=new Blob(chunks,{type});
+    $("recBar").hidden=true;$("recBtn").disabled=false;
+    const v=$("vOut");if(v.src.startsWith("blob:"))URL.revokeObjectURL(v.src);v.src=URL.createObjectURL(blob);
+    lastVideo={blob,ext};
+    if(SITE_MODE){$("resave").hidden=false;$("resave").className="btn primary";$("resaveLabel").textContent=isIOS?"앨범에 저장하기":"휴대폰에 저장하기";$("recHint").textContent=isIOS?"영상이 완성됐어요! 아래 '앨범에 저장하기'를 누르고, 공유창에서 '비디오 저장'을 고르세요.":"영상이 완성됐어요! 아래 버튼을 누르면 휴대폰에 저장돼요.";if(isKakao)$("recHint").textContent+=" (카카오톡 안에서는 저장이 안 될 수 있어요)";cycle=-1;t0=performance.now();raf=requestAnimationFrame(loop);return;}
+    const r=await saveFile(`신가네-대전여행.${ext}`,blob);
+    if(r==="saved"){$("recHint").textContent=afterSaveHint("영상",r);toast("영상을 저장했어요");}
+    else if(r==="declined"){$("recHint").textContent="저장을 취소했어요. '다시 저장하기'를 누르면 다시 물어봐요.";$("resave").hidden=false;}
+    else{v.hidden=false;$("recHint").textContent=noSaveHint("영상");}
+    if(r)$("resave").hidden=false;
+    cycle=-1;t0=performance.now();raf=requestAnimationFrame(loop);
+  };
+  recording=rec;$("recBtn").disabled=true;$("recBar").hidden=false;$("recBar").firstElementChild.style.width="0";
+  $("recHint").textContent=`영상 만드는 중이에요 (약 ${Math.ceil(totalDur())}초). 화면을 켜 두세요.`;
+  cancelAnimationFrame(raf);frame(0);rec.start(200);t0=performance.now();if(dest)startMusic(totalDur(),dest);recTimer=setInterval(recTick,1000/30);
+});
+
+/* ================= boot ================= */
+drawPlaces();drawCourse();drawAlbum();
+if(document.fonts){document.fonts.load('100px "Black Han Sans"',"성심당대전여행또놀러오세요").then(()=>document.fonts.load('52px "Material Symbols Outlined"',"cake")).then(()=>{if(!$("maker").hidden)renderPreview();drawAlbum();}).catch(()=>{});}
+</script>
+
+</body>
+</html>
