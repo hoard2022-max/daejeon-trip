@@ -357,6 +357,7 @@ button{font:inherit;cursor:pointer;color:inherit}
     <button class="btn red" id="recBtn" type="button"><span class="ms" aria-hidden="true">movie</span>영상 만들어 저장하기</button>
     <button class="btn" id="resave" type="button" hidden><span class="ms" aria-hidden="true">download</span><span id="resaveLabel">방금 만든 영상 다시 저장하기</span></button>
     <video id="vOut" class="stage" controls playsinline hidden></video>
+    <p class="chosen" id="encNote"></p>
   </div>
 </div>
 <div class="toast" id="toast" hidden></div>
@@ -635,6 +636,9 @@ function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);
 function cover(c,img,x,y,w,h){const s=Math.max(w/img.width,h/img.height),iw=img.width*s,ih=img.height*s;c.drawImage(img,x+(w-iw)/2,y+(h-ih)/2,iw,ih);}
 function dateStr(d=new Date()){return`${d.getFullYear()}.${d.getMonth()+1}.${d.getDate()} (${"일월화수목금토"[d.getDay()]})`;}
 function wrapTitle(c,t,fs,maxW){c.font=`${fs}px "Black Han Sans", sans-serif`;const words=t.trim().split(/\s+/),lines=[];let cur="";for(const w of words){const test=cur?cur+" "+w:w;if(c.measureText(test).width>maxW&&cur){lines.push(cur);cur=w}else cur=test}if(cur)lines.push(cur);return lines;}
+async function ensureFonts(recs){if(!document.fonts)return;
+  const t=recs.map(r=>r.title||"").join("")||"대전",w=recs.map(r=>(r.with||"")+(r.date||"")).join("")+"우리 가족 0123456789.() 일월화수목금토";
+  try{await Promise.race([Promise.all([document.fonts.load('100px "Black Han Sans"',t),document.fonts.load('400 28px "Gowun Dodum"',w),document.fonts.load("400 28px Inter",w),document.fonts.load("600 28px Inter","DATE WITH"),document.fonts.load('52px "Material Symbols Outlined"',"cake")]),new Promise(r=>setTimeout(r,4000))]);}catch(e){}}
 function makeCard(rec,img,k){
   const cv=document.createElement("canvas"),c=cv.getContext("2d");
   const cw=780*k,pad=46*k,inner=cw-pad*2,ph=560*k;
@@ -675,7 +679,7 @@ function makerSugs(q){q=q.replace(/\s/g,"").toLowerCase();
   return ALL().filter(p=>(p.name+p.short+(p.kw||"")+(p.area||"")).replace(/\s/g,"").toLowerCase().includes(q)).slice(0,6);}
 function drawSugs(){const q=$("title").value;$("sugs").innerHTML=makerSugs(q).map(p=>`<button class="sug${p.short===q?" on":""}" type="button" data-sug="${p.id}">${p.emoji} ${esc(p.short)}</button>`).join("");}
 $("sugs").addEventListener("click",e=>{const b=e.target.closest("[data-sug]");if(!b)return;const p=byId(b.dataset.sug);$("title").value=p.short;iconSel.value=p.icon;drawSugs();renderPreview();});
-let rq=0;function renderPreview(){cancelAnimationFrame(rq);rq=requestAnimationFrame(()=>{const rec={title:$("title").value,with:$("with").value,icon:iconSel.value,date:dateStr()};$("preview").src=posterCanvas(rec,mk.img,720).toDataURL("image/jpeg",.85);});}
+let rq=0,rqN=0;function renderPreview(){cancelAnimationFrame(rq);const n=++rqN;rq=requestAnimationFrame(async()=>{const rec={title:$("title").value,with:$("with").value,icon:iconSel.value,date:dateStr()};await ensureFonts([rec]);if(n!==rqN)return;$("preview").src=posterCanvas(rec,mk.img,720).toDataURL("image/jpeg",.85);});}
 $("title").addEventListener("input",()=>{const m=ALL().find(p=>p.short===$("title").value.trim());if(m)iconSel.value=m.icon;$("makerErr").hidden=true;drawSugs();renderPreview();});
 ["with","iconset"].forEach(id=>$(id).addEventListener("input",renderPreview));
 $("photo").addEventListener("change",async e=>{const f=e.target.files[0];if(!f)return;
@@ -697,14 +701,14 @@ $("savePoster").addEventListener("click",async()=>{const err=$("makerErr");
 /* ================= album + viewer ================= */
 let posters=[],thumbs=[];
 async function drawAlbum(){
-  posters=await store.all();
+  posters=await store.all();await ensureFonts(posters);
   const html=[],urls=[];for(const r of posters){const img=await loadImg(r.photo).catch(()=>null);const b=await toBlob(posterCanvas(r,img,360),"image/jpeg",.8);const u=URL.createObjectURL(b);urls.push(u);html.push(`<button type="button" data-view="${r.id}"><img src="${u}" alt="${esc(r.title)} 포스터"></button>`);}
   thumbs.forEach(u=>URL.revokeObjectURL(u));thumbs=urls;
   $("pCount").textContent=posters.length+"장";$("album").hidden=!posters.length;$("empty").hidden=!!posters.length;$("album").innerHTML=html.join("");}
 let viewing=null,viewBlob=null,delArmed=false;
 $("album").addEventListener("click",async e=>{const b=e.target.closest("[data-view]");if(!b)return;viewing=posters.find(p=>p.id===b.dataset.view);if(!viewing)return;
   delArmed=false;$("vDelLabel").textContent="지우기";$("vTitle").textContent=viewing.title;
-  const img=await loadImg(viewing.photo).catch(()=>null);viewBlob=await toBlob(posterCanvas(viewing,img,1080),"image/jpeg",.92);
+  await ensureFonts([viewing]);const img=await loadImg(viewing.photo).catch(()=>null);viewBlob=await toBlob(posterCanvas(viewing,img,1080),"image/jpeg",.92);
   const old=$("vImg").src;$("vImg").src=URL.createObjectURL(viewBlob);if(old.startsWith("blob:"))URL.revokeObjectURL(old);$("vImg").alt=viewing.title+" 포스터";
   $("vHint").hidden=!!downloads;openSheet("viewer");});
 $("vSave").addEventListener("click",async()=>{if(!viewBlob)return;const r=await saveFile(`신가네-대전-${viewing.title}.jpg`,viewBlob);
@@ -866,6 +870,7 @@ $("makeVideo").addEventListener("click",async()=>{
   if(posters.length<2){toast("포스터가 2장 이상 있어야 영상을 만들 수 있어요");return;}
   const imgs=[];for(const r of posters)imgs.push(await loadImg(r.photo).catch(()=>null));
   const fam=await loadImg("assets/family.webp").catch(()=>null);
+  await ensureFonts([...posters,{title:"신가네 대전여행",with:"신정도 · 윤혜경 · 신나현"},{title:"또 놀러 오세요",with:"사랑하는 사위가"}]);
   const k=VW/1080,first=fam||imgs[0],last=fam||imgs[imgs.length-1];
   slides=[{bg:bgCanvas(first),card:makeCard({title:"신가네 대전여행",with:"신정도 · 윤혜경 · 신나현",icon:"travel",date:posters[0].date},first,k)}];
   posters.forEach((r,i)=>slides.push({bg:bgCanvas(imgs[i]),card:makeCard(r,imgs[i],k)}));
@@ -874,6 +879,7 @@ $("makeVideo").addEventListener("click",async()=>{
   musicOn=false;previewId=null;chosenId=null;drawSongs();stopMusic();
   openSheet("video");cancelAnimationFrame(raf);cycle=-1;t0=performance.now();raf=requestAnimationFrame(loop);
 });
+let lastEncErr="";
 function setBar(p){$("recBar").firstElementChild.style.width=Math.round(Math.min(1,p)*100)+"%";}
 function finishVideo(blob,ext){
   $("recBar").hidden=true;$("recBtn").disabled=false;
@@ -883,6 +889,7 @@ function finishVideo(blob,ext){
   $("resaveLabel").textContent=SITE_MODE&&isIOS?"앨범에 저장하기":"휴대폰에 저장하기";
   $("recHint").textContent=SITE_MODE&&isIOS?"영상이 완성됐어요! 아래 '앨범에 저장하기'를 누르고, 공유창에서 '비디오 저장'을 고르세요.":"영상이 완성됐어요! 아래 버튼을 누르면 휴대폰에 저장돼요.";
   if(isKakao)$("recHint").textContent+=" (카카오톡 안에서는 저장이 안 될 수 있어요)";
+  $("encNote").textContent=encInfo?`만든 방식: ${encInfo}`:"";
   cycle=-1;t0=performance.now();raf=requestAnimationFrame(loop);
 }
 /* Render the song offline so it can be encoded into the file */
@@ -898,24 +905,51 @@ async function renderSongOffline(D,sr){
   }finally{[actx,noiseBuf,revBuf]=prev;}
 }
 /* Encode a normal (non-fragmented) MP4 with the full duration in its header, so messengers keep all of it */
-let encCancel=false;
+let encCancel=false,encInfo="";
+/* Decode our own AAC chunks back to sound: proves the config and chunks match. -1 = can't check here */
+async function decodeCheck(chunks,cfg){if(typeof AudioDecoder==="undefined")return -1;
+  try{let s=0,n=0,bad=null;const dec=new AudioDecoder({output:ad=>{const f=new Float32Array(ad.numberOfFrames);try{ad.copyTo(f,{planeIndex:0,format:"f32-planar"});}catch(e){ad.copyTo(f,{planeIndex:0});}for(let i=0;i<f.length;i+=16){s+=f[i]*f[i];n++;}ad.close();},error:e=>{bad=e;}});
+    dec.configure(cfg);for(const ch of chunks.slice(0,Math.min(chunks.length,400)))dec.decode(ch);await dec.flush();dec.close();if(bad)return 0;return Math.sqrt(s/Math.max(1,n));}catch(e){return 0;}}
+/* AAC "AudioSpecificConfig" for AAC-LC, used when a browser (e.g. Safari) doesn't hand one over */
+function aacASC(sr,ch){const fi=[96000,88200,64000,48000,44100,32000,24000,22050,16000,12000,11025,8000].indexOf(sr);return new Uint8Array([(2<<3)|(fi>>1),((fi&1)<<7)|(ch<<3)]);}
+/* Decode the finished file's sound and make sure the music is really in it */
+async function audioLevel(blob){try{const ab=await blob.arrayBuffer();const oc=new(window.OfflineAudioContext||window.webkitOfflineAudioContext)(1,48000,48000);
+  const a=await oc.decodeAudioData(ab);const d=a.getChannelData(0);let s=0,n=0;for(let i=0;i<d.length;i+=64){s+=d[i]*d[i];n++;}return{rms:Math.sqrt(s/Math.max(1,n)),dur:a.duration};}catch(e){return{rms:-1,err:String(e&&e.message||e)};}}
 async function encodeVideo(onProgress){
   encCancel=false;
-  const fps=30,D=totalDur(),N=Math.ceil(D*fps),sr=48000;
+  const fps=30,D=totalDur(),N=Math.ceil(D*fps);
   let vcfg=null;
   for(const codec of["avc1.640028","avc1.4d0028","avc1.42002a","avc1.42001f"]){const c={codec,width:VW,height:VH,bitrate:4000000,framerate:fps};try{if((await VideoEncoder.isConfigSupported(c)).supported){vcfg=c;break;}}catch(e){}}
   if(!vcfg)throw new Error("no-video-encoder");
   let acfg=null;
-  if(musicOn){if(typeof AudioEncoder==="undefined"||typeof AudioData==="undefined")throw new Error("no-audio-encoder");
-    const c={codec:"mp4a.40.2",sampleRate:sr,numberOfChannels:2,bitrate:128000};
-    try{if((await AudioEncoder.isConfigSupported(c)).supported)acfg=c;}catch(e){}
-    if(!acfg)throw new Error("no-aac");}
+  if(musicOn){
+    if(typeof AudioEncoder==="undefined"||typeof AudioData==="undefined")throw new Error("no-audio-encoder");
+    for(const sr of[48000,44100]){for(const extra of[{aac:{format:"aac"}},{}]){const c=Object.assign({codec:"mp4a.40.2",sampleRate:sr,numberOfChannels:2,bitrate:128000},extra);
+      try{if((await AudioEncoder.isConfigSupported(c)).supported){acfg=c;break;}}catch(e){}}if(acfg)break;}
+    if(!acfg)throw new Error("no-aac");
+  }
+  const sr=acfg?acfg.sampleRate:48000;
   const abuf=acfg?await renderSongOffline(D,sr):null;
+  /* encode audio first and keep the chunks, so a failure here falls back before any video work */
+  const achunks=[];let ameta=null,err=null;
+  if(acfg){
+    const ae=new AudioEncoder({output:(ch,meta)=>{achunks.push(ch);if(meta&&meta.decoderConfig&&!ameta)ameta=meta;},error:e=>{err=e;}});ae.configure(acfg);
+    const L=abuf.getChannelData(0),R=abuf.getChannelData(1),step=1024;
+    for(let i=0;i<abuf.length;i+=step){const n=Math.min(step,abuf.length-i),data=new Float32Array(n*2);data.set(L.subarray(i,i+n),0);data.set(R.subarray(i,i+n),n);
+      const ad=new AudioData({format:"f32-planar",sampleRate:sr,numberOfFrames:n,numberOfChannels:2,timestamp:Math.round(i*1e6/sr),data});ae.encode(ad);ad.close();
+      if(i%(step*64)===0)await new Promise(r=>setTimeout(r,0));}
+    await ae.flush();ae.close();
+    if(err)throw err;
+    if(!achunks.length)throw new Error("no-audio-chunks");
+  }
+  const desc=ameta&&ameta.decoderConfig&&ameta.decoderConfig.description;
+  const fixedMeta={decoderConfig:{codec:"mp4a.40.2",sampleRate:sr,numberOfChannels:2,description:desc&&desc.byteLength?desc:aacASC(sr,2)}};
   const muxer=new Mp4Muxer.Muxer({target:new Mp4Muxer.ArrayBufferTarget(),video:{codec:"avc",width:VW,height:VH,frameRate:fps},
     audio:acfg?{codec:"aac",numberOfChannels:2,sampleRate:sr}:undefined,fastStart:"in-memory",firstTimestampBehavior:"offset"});
-  let err=null;
   const ve=new VideoEncoder({output:(ch,meta)=>muxer.addVideoChunk(ch,meta),error:e=>{err=e;}});
   ve.configure(vcfg);
+  let ai=0;
+  const pushAudioUntil=us=>{while(ai<achunks.length&&achunks[ai].timestamp<=us){muxer.addAudioChunk(achunks[ai],ai===0?fixedMeta:undefined);ai++;}};
   for(let f=0;f<N;f++){
     if(encCancel)throw new Error("cancel");if(err)throw err;
     frame(Math.min(f/fps,D-.001));
@@ -925,16 +959,17 @@ async function encodeVideo(onProgress){
     if(f%8===0){onProgress(f/N*.9);await new Promise(r=>setTimeout(r,0));}
   }
   await ve.flush();ve.close();
-  if(acfg){
-    const ae=new AudioEncoder({output:(ch,meta)=>muxer.addAudioChunk(ch,meta),error:e=>{err=e;}});ae.configure(acfg);
-    const L=abuf.getChannelData(0),R=abuf.getChannelData(1),step=1024;
-    for(let i=0;i<abuf.length;i+=step){const n=Math.min(step,abuf.length-i),data=new Float32Array(n*2);data.set(L.subarray(i,i+n),0);data.set(R.subarray(i,i+n),n);
-      const ad=new AudioData({format:"f32-planar",sampleRate:sr,numberOfFrames:n,numberOfChannels:2,timestamp:Math.round(i*1e6/sr),data});ae.encode(ad);ad.close();}
-    await ae.flush();ae.close();
-  }
+  pushAudioUntil(Infinity);
   if(err)throw err;
-  muxer.finalize();onProgress(1);
-  return new Blob([muxer.target.buffer],{type:"video/mp4"});
+  muxer.finalize();
+  const blob=new Blob([muxer.target.buffer],{type:"video/mp4"});
+  if(acfg){onProgress(.95);
+    const dl=await decodeCheck(achunks,fixedMeta.decoderConfig);if(dl>=0&&dl<=.002)throw new Error("audio-silent "+dl);
+    const lv=await audioLevel(blob);if(lv.rms>=0&&lv.rms<=.002)throw new Error("audio-silent-file "+lv.rms);
+    encInfo=`빠른 방식 · 음악 ${dl>.002||lv.rms>.002?"확인됨":"포함"}`;}
+  else encInfo="빠른 방식 · 음악 없음";
+  onProgress(1);
+  return blob;
 }
 function recordRealtime(){
   if(!vc.captureStream||typeof MediaRecorder==="undefined"){toast("이 휴대폰 브라우저는 영상 저장을 지원하지 않아요");$("recBtn").disabled=false;$("recBar").hidden=true;return;}
@@ -944,7 +979,7 @@ function recordRealtime(){
   const mime=types.find(m=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(m));
   let rec;try{rec=new MediaRecorder(stream,mime?{mimeType:mime,videoBitsPerSecond:4000000,audioBitsPerSecond:128000}:{});}catch(e){toast("영상을 만들 수 없어요");$("recBtn").disabled=false;$("recBar").hidden=true;return;}
   const chunks=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
-  rec.onstop=()=>{if(rec._cancel)return;recording=null;const type=rec.mimeType||mime||"video/webm";finishVideo(new Blob(chunks,{type}),type.includes("mp4")?"mp4":"webm");};
+  rec.onstop=async()=>{if(rec._cancel)return;recording=null;const type=rec.mimeType||mime||"video/webm",blob=new Blob(chunks,{type});let note="녹화 방식"+(lastEncErr?` [${lastEncErr.slice(0,40)}]`:"");if(dest){const lv=await audioLevel(blob);note+=lv.rms>.002?" · 음악 확인됨":lv.rms<0?" · 음악 확인 불가":" · 음악이 안 들어갔어요";}encInfo=note;finishVideo(blob,type.includes("mp4")?"mp4":"webm");};
   recording=rec;
   $("recHint").textContent=`영상 만드는 중이에요 (약 ${Math.ceil(totalDur())}초). 화면을 켜 두세요.`;
   frame(0);rec.start();t0=performance.now();if(dest)startMusic(totalDur(),dest);recTimer=setInterval(recTick,1000/30);
@@ -958,7 +993,7 @@ $("recBtn").addEventListener("click",async()=>{
   if(window.VideoEncoder&&window.VideoFrame&&window.Mp4Muxer){
     recording={state:"encoding"};$("recHint").textContent="영상 만드는 중이에요. 잠시만 기다려 주세요.";
     try{const blob=await encodeVideo(setBar);recording=null;finishVideo(blob,"mp4");return;}
-    catch(e){recording=null;if(e&&e.message==="cancel")return;console.warn("encoder fallback",e);}
+    catch(e){recording=null;if(e&&e.message==="cancel")return;console.warn("encoder fallback",e);lastEncErr=String(e&&e.message||e);}
   }
   recordRealtime();
 });
