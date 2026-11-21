@@ -187,6 +187,7 @@ button{font:inherit;cursor:pointer;color:inherit}
 .pickbar{display:flex;flex-direction:column;gap:8px;background:var(--chip);border-radius:14px;padding:12px}
 .pickbar span{font-size:15px}
 .pickbar .btn{flex:none}
+.count.sync{margin:-6px 0 0}.count.sync:empty{display:none}.count.warn{color:var(--curtain)}
 .chosen{margin:0;font-size:14px;color:var(--ink-soft);text-align:center}
 .kakao-tip{background:#FEE500;color:#3A1D1D;border-radius:12px;padding:10px 14px;font-size:14px}
 .progress{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
@@ -269,6 +270,8 @@ button{font:inherit;cursor:pointer;color:inherit}
   <section class="panel" id="course" role="tabpanel" aria-labelledby="tab-course" hidden>
     <h2>우리의 코스</h2>
     <p class="lead">추천 명소에서 담거나, 각 자리의 <b>+ 추가</b>로 직접 넣을 수 있어요.</p>
+    <p class="count sync" id="syncNote"></p>
+    <div class="pickbar" id="syncConflict" hidden><span>다른 폰에 저장된 코스와 이 폰의 코스가 달라요. 어느 쪽으로 맞출까요?</span><button class="btn primary" id="useRemote" type="button"><span class="ms" aria-hidden="true">cloud_download</span>다른 폰 코스로 맞추기</button><button class="btn" id="useLocal" type="button"><span class="ms" aria-hidden="true">cloud_upload</span>이 폰 코스를 모두에게 보내기</button></div>
     <div id="courseBody" style="display:flex;flex-direction:column;gap:12px"></div>
   </section>
 
@@ -536,7 +539,43 @@ const byId=id=>ALL().find(p=>p.id===id);
 let course=ls.get("course2",null);
 if(!course){course={sat:[],night:[],sun:ls.get("course",[])};}
 for(const k of Object.keys(SLOTS)){course[k]=(course[k]||[]).filter(id=>byId(id));}
-const saveCourse=()=>{ls.set("course2",course);ls.set("customs",customs);};
+/* ---- course sync between phones (site only): latest course is posted to a private ntfy.sh topic and streamed live to every open phone ---- */
+const SYNC_TOPIC="shin-daejeon-trip-k7q2x9m4w3",SYNC_URL="https://ntfy.sh/"+SYNC_TOPIC,SYNC=SITE_MODE&&typeof fetch==="function";
+const DEV=ls.get("dev",null)||(()=>{const d=Math.random().toString(36).slice(2,10);ls.set("dev",d);return d;})();
+let courseAt=ls.get("courseAt",0),pushT=0,syncReady=false,lastSyncAt=0,es=null;
+const saveCourse=(fromRemote)=>{ls.set("course2",course);ls.set("customs",customs);if(fromRemote!==true){courseAt=Date.now();ls.set("courseAt",courseAt);syncPush();}};
+function syncStatus(t,warn){const el=$("syncNote");if(!el)return;el.textContent=t;el.classList.toggle("warn",!!warn);}
+function courseKey(c){return JSON.stringify({sat:c.sat||[],night:c.night||[],sun:c.sun||[]});}
+function syncPush(){if(!SYNC)return;clearTimeout(pushT);syncStatus("☁️ 저장하는 중…");
+  pushT=setTimeout(async()=>{try{const r=await fetch(SYNC_URL,{method:"POST",body:JSON.stringify({v:1,course,customs,updatedAt:courseAt,dev:DEV})});if(!r.ok)throw new Error(r.status);lastSyncAt=Date.now();syncStatus("☁️ 모든 폰과 연동 중 · 방금 저장됨");}
+    catch(e){syncStatus("⚠️ 인터넷이 불안정해서 아직 다른 폰에 못 보냈어요. 다시 시도할게요.",true);setTimeout(syncPush,8000);}},700);}
+function applyRemote(d){
+  const ids=new Set(customs.map(c=>c.id));for(const c of d.customs||[])if(!ids.has(c.id))customs.push(c);
+  course={sat:[],night:[],sun:[]};for(const k of Object.keys(SLOTS))course[k]=((d.course||{})[k]||[]).filter(id=>byId(id));
+  courseAt=d.updatedAt||Date.now();ls.set("courseAt",courseAt);saveCourse(true);drawCourse();drawPlaces();}
+async function fetchLatest(){const r=await fetch(SYNC_URL+"/json?poll=1&since=all",{cache:"no-store"});if(!r.ok)throw new Error(r.status);const t=await r.text();let best=null,bestTime=0;
+  for(const line of t.split("\n")){if(!line.trim())continue;try{const ev=JSON.parse(line);if(ev.event!=="message")continue;const d=JSON.parse(ev.message);if(d&&d.v===1&&(!best||d.updatedAt>=best.updatedAt)){best=d;bestTime=ev.time*1000;}}catch(e){}}
+  return{best,bestTime};}
+async function syncPoll(first){
+  if(!SYNC)return;let res;try{res=await fetchLatest();}catch(e){syncStatus("⚠️ 연동 서버에 연결하지 못했어요. 이 폰에는 저장돼 있어요.",true);return;}
+  const{best,bestTime}=res,localHas=Object.values(course).some(a=>a.length);
+  if(!best){if(localHas){if(!courseAt){courseAt=Date.now();ls.set("courseAt",courseAt);}syncPush();}else syncStatus("☁️ 모든 폰과 연동 중");}
+  else if(first&&courseAt===0&&localHas&&courseKey(best.course||{})!==courseKey(course)){showConflict(best);}
+  else if(best.updatedAt>courseAt){applyRemote(best);if(!first)toast("다른 폰에서 코스가 바뀌었어요");syncStatus("☁️ 모든 폰과 연동 중");}
+  else if(best.updatedAt<courseAt){syncPush();}
+  else{syncStatus("☁️ 모든 폰과 연동 중");if(Date.now()-bestTime>4*3600e3)syncPush();}
+  lastSyncAt=Date.now();}
+function showConflict(remote){const box=$("syncConflict");box.hidden=false;syncStatus("⚠️ 아래에서 어느 코스로 맞출지 골라 주세요",true);toast("우리의 코스 탭을 확인해 주세요");
+  $("useRemote").onclick=()=>{applyRemote(remote);box.hidden=true;toast("다른 폰의 코스로 맞췄어요");};
+  $("useLocal").onclick=()=>{courseAt=Date.now();ls.set("courseAt",courseAt);syncPush();box.hidden=true;toast("이 폰의 코스를 모든 폰에 보냈어요");};}
+function syncLive(){if(!SYNC||typeof EventSource==="undefined")return;try{if(es)es.close();}catch(e){}
+  es=new EventSource(SYNC_URL+"/sse");
+  es.onmessage=e=>{try{const ev=JSON.parse(e.data);if(ev.event&&ev.event!=="message")return;const d=JSON.parse(ev.message);if(!d||d.v!==1||d.dev===DEV)return;
+    if(d.updatedAt>courseAt){$("syncConflict").hidden=true;applyRemote(d);toast("다른 폰에서 코스가 바뀌었어요");syncStatus("☁️ 모든 폰과 연동 중 · 방금 받음");}}catch(_){}};}
+if(SYNC){
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-lastSyncAt>5000){syncPoll(false);syncLive();}});
+  setInterval(()=>{if(!document.hidden)syncPoll(false);},30000);
+}
 const inCourse=id=>Object.keys(SLOTS).find(k=>course[k].includes(id));
 
 /* ================= intro ================= */
@@ -989,6 +1028,7 @@ $("recBtn").addEventListener("click",async()=>{
 
 /* ================= boot ================= */
 drawPlaces();drawCourse();drawAlbum();
+if(SYNC){syncPoll(true);syncLive();}
 if(document.fonts){document.fonts.load('100px "Black Han Sans"',"성심당대전여행또놀러오세요").then(()=>document.fonts.load('52px "Material Symbols Outlined"',"cake")).then(()=>{if(!$("maker").hidden)renderPreview();drawAlbum();}).catch(()=>{});}
 </script>
 
