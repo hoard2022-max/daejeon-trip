@@ -348,7 +348,7 @@ button{font:inherit;cursor:pointer;color:inherit}
 <div id="video" class="sheet" hidden>
   <div class="inner">
     <div class="sheet-top"><h3>우리의 대전 영상</h3><button class="x" data-close="video" type="button" aria-label="닫기"><span class="ms">close</span></button></div>
-    <canvas id="vCanvas" class="stage" width="720" height="1280"></canvas>
+    <canvas id="vCanvas" class="stage" width="1080" height="1920"></canvas>
     <div class="kakao-tip" data-kakao hidden>카카오톡 안에서는 영상 저장이 안 될 수 있어요. 오른쪽 위 ⋮ → '다른 브라우저로 열기'로 열어 주세요.</div>
     <div class="progress" id="recBar" hidden><i></i></div>
     <p class="hint" id="recHint">미리보기가 계속 반복돼요. 마음에 들면 저장하세요.</p>
@@ -749,7 +749,12 @@ if(isKakao)document.querySelectorAll("[data-kakao]").forEach(el=>el.hidden=false
 $("vDel").addEventListener("click",async()=>{if(!delArmed){delArmed=true;$("vDelLabel").textContent="한 번 더 누르면 지워져요";return;}await store.del(viewing.id);closeSheet("viewer");await drawAlbum();toast("포스터를 지웠어요");});
 
 /* ================= video ================= */
-const VW=720,VH=1280,HOLD=1.6,TR=.8,SEG=HOLD+TR;
+let VW=1080,VH=1920;const HOLD=1.6,TR=.8,SEG=HOLD+TR;
+const VCODECS=["avc1.640033","avc1.640032","avc1.64002a","avc1.640028","avc1.4d0028","avc1.42002a","avc1.42001f"];
+/* Full HD (1080x1920) when the phone's encoder can do it, otherwise 720x1280 */
+async function pickResolution(){let w=1080,h=1920;
+  if(window.VideoEncoder){let ok=false;for(const codec of VCODECS){try{if((await VideoEncoder.isConfigSupported({codec,width:1080,height:1920,bitrate:12000000,framerate:30})).supported){ok=true;break;}}catch(e){}}if(!ok){w=720;h=1280;}}
+  VW=w;VH=h;vc.width=VW;vc.height=VH;}
 const vc=$("vCanvas"),vx=vc.getContext("2d");
 let slides=[],raf=0,t0=0,recording=null,recTimer=0;
 function ease(p){return p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;}
@@ -897,6 +902,7 @@ $("makeVideo").addEventListener("click",async()=>{
   posters=await store.all();
   if(posters.length<2){toast("포스터가 2장 이상 있어야 영상을 만들 수 있어요");return;}
   const imgs=[];for(const r of posters)imgs.push(await loadImg(r.photo).catch(()=>null));
+  await pickResolution();
   const fam=await loadImg("assets/family.webp").catch(()=>null);
   await ensureFonts([...posters,{title:"신가네 대전여행",with:"신정도 · 윤혜경 · 신나현"},{title:"또 놀러 오세요",with:"사랑하는 사위가"}]);
   const k=VW/1080,first=fam||imgs[0],last=fam||imgs[imgs.length-1];
@@ -947,12 +953,12 @@ async function encodeVideo(onProgress){
   encCancel=false;
   const fps=30,D=totalDur(),N=Math.ceil(D*fps);
   let vcfg=null;
-  for(const codec of["avc1.640028","avc1.4d0028","avc1.42002a","avc1.42001f"]){const c={codec,width:VW,height:VH,bitrate:4000000,framerate:fps};try{if((await VideoEncoder.isConfigSupported(c)).supported){vcfg=c;break;}}catch(e){}}
+  for(const codec of VCODECS){const c={codec,width:VW,height:VH,bitrate:VW>=1080?12000000:5000000,framerate:fps};try{if((await VideoEncoder.isConfigSupported(c)).supported){vcfg=c;break;}}catch(e){}}
   if(!vcfg)throw new Error("no-video-encoder");
   let acfg=null;
   if(musicOn){
     if(typeof AudioEncoder==="undefined"||typeof AudioData==="undefined")throw new Error("no-audio-encoder");
-    for(const sr of[48000,44100]){for(const extra of[{aac:{format:"aac"}},{}]){const c=Object.assign({codec:"mp4a.40.2",sampleRate:sr,numberOfChannels:2,bitrate:128000},extra);
+    for(const sr of[48000,44100]){for(const extra of[{aac:{format:"aac"}},{}]){const c=Object.assign({codec:"mp4a.40.2",sampleRate:sr,numberOfChannels:2,bitrate:160000},extra);
       try{if((await AudioEncoder.isConfigSupported(c)).supported){acfg=c;break;}}catch(e){}}if(acfg)break;}
     if(!acfg)throw new Error("no-aac");
   }
@@ -1005,7 +1011,7 @@ function recordRealtime(){
   const stream=vc.captureStream(30);if(dest)dest.stream.getAudioTracks().forEach(tr=>stream.addTrack(tr));
   const types=dest?["video/mp4;codecs=avc1,mp4a.40.2","video/mp4","video/webm;codecs=vp9,opus","video/webm;codecs=vp8,opus","video/webm"]:["video/mp4;codecs=avc1","video/mp4","video/webm;codecs=vp9","video/webm"];
   const mime=types.find(m=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(m));
-  let rec;try{rec=new MediaRecorder(stream,mime?{mimeType:mime,videoBitsPerSecond:4000000,audioBitsPerSecond:128000}:{});}catch(e){toast("영상을 만들 수 없어요");$("recBtn").disabled=false;$("recBar").hidden=true;return;}
+  let rec;try{rec=new MediaRecorder(stream,mime?{mimeType:mime,videoBitsPerSecond:VW>=1080?12000000:5000000,audioBitsPerSecond:160000}:{});}catch(e){toast("영상을 만들 수 없어요");$("recBtn").disabled=false;$("recBar").hidden=true;return;}
   const chunks=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
   rec.onstop=async()=>{if(rec._cancel)return;recording=null;const type=rec.mimeType||mime||"video/webm",blob=new Blob(chunks,{type});let note="녹화 방식"+(lastEncErr?` [${lastEncErr.slice(0,40)}]`:"");if(dest){const lv=await audioLevel(blob);note+=lv.rms>.002?" · 음악 확인됨":lv.rms<0?" · 음악 확인 불가":" · 음악이 안 들어갔어요";}encInfo=note;finishVideo(blob,type.includes("mp4")?"mp4":"webm");};
   recording=rec;
